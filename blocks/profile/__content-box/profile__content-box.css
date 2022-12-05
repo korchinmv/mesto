@@ -1,0 +1,10 @@
+.profile__content-box {
+	display: flex;
+	margin-bottom: 16px;
+}
+
+@media screen and (max-width: 768px) {
+	.profile__content-box {
+		margin-bottom: 14px;
+	}
+}
