@@ -1,0 +1,32 @@
+.profile__edit {
+	align-self: flex-end;
+	border: 1px solid #fff;
+	background-color: transparent;
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
+	padding: 0;
+	position: relative;
+	margin-bottom: 7px;
+	transition: border .3s ease, opacity .3s ease;
+}
+
+.profile__edit::before {
+	content: "";
+	background-image: url(../../../images/svg/pencil.svg);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 10px;
+	height: 10px;
+}
+
+
+@media screen and (max-width: 768px) {
+	.profile__edit {
+		width: 18px;
+		height: 18px;
+		margin-bottom: 4px;
+	}
+}
