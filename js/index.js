@@ -10,9 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileName = document.querySelector(".profile__name");
   const profileProfession = document.querySelector(".profile__profession");
 
-  console.log(profileName);
-  console.log(profileProfession);
-
   const popupOpened = () => {
     popup.classList.add("popup_opened");
   };
