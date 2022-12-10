@@ -3,6 +3,12 @@
 	border-bottom: 1px solid #545454;
 }
 
+@media screen and (max-width: 768px) {
+	.header__box {
+		padding-bottom: 30px;
+	}
+}
+
 @media screen and (max-width: 320px) {
 	.header__box {
 		border-bottom: none;

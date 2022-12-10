@@ -1,0 +1,9 @@
+.gallery__photo {
+	display: block;
+	border-radius: inherit 0;
+	background-color: #c4c4c4;
+	object-fit: cover;
+	height: 282px;
+	max-width: 100%;
+	width: 100%;
+}

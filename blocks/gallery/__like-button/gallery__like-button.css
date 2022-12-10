@@ -1,0 +1,9 @@
+.gallery__like-button {
+	background-color: transparent;
+	border: 0;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
+}
