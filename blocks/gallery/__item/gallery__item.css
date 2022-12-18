@@ -6,3 +6,9 @@
 	overflow: hidden;
 	position: relative;
 }
+
+@media screen and (max-width: 320px) {
+	.gallery__item {
+		max-height: 361px;
+	}
+}

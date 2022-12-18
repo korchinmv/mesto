@@ -25,4 +25,10 @@
 	.profile__add {
 		width: 100%;
 	}
+
+	.profile__add::before {
+		background-size: contain;
+		width: 16px;
+		height: 16px;
+	}
 }

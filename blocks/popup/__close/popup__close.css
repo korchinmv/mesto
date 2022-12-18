@@ -6,8 +6,8 @@
 	width: 32px;
 	height: 32px;
 	position: absolute;
-	top: -34px;
-	right: -34px;
+	top: -40px;
+	right: -39px;
 }
 
 .popup__close::before,
@@ -19,7 +19,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%) rotate(45deg);
-	width: 32px;
+	width: 40px;
 	height: 4px;
 }
 
@@ -29,7 +29,13 @@
 
 @media screen and (max-width: 768px) {
 	.popup__close {
-		top: -35px;
-		right: -5px;
+		top: -41px;
+		right: -7px;
+	}
+
+	.popup__close::before,
+	.popup__close::after {
+		width: 26px;
+		height: 3px;
 	}
 }

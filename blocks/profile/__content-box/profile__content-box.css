@@ -5,6 +5,7 @@
 
 @media screen and (max-width: 768px) {
 	.profile__content-box {
-		margin-bottom: 14px;
+		margin-bottom: 10px;
+		padding-left: 25px;
 	}
 }
