@@ -12,5 +12,6 @@
 	.profile__profession {
 		font-size: 14px;
 		margin-bottom: 32px;
+		max-width: 230px;
 	}
 }
