@@ -10,7 +10,7 @@
 }
 
 .popup__input::placeholder {
-  color: inherit;
+  color: #c4c4c4;
   font-size: 14px;
 }
 
