@@ -29,14 +29,14 @@
 							<div class="profile__content-box">
 								<h1 class="profile__name">Жак-Ив Кусто</h1>
 
-								<button class="profile__edit hover" type="button"></button>
+								<button class="profile__edit hover" type="button" data-path="profile-popup"></button>
 							</div>
 
 							<p class="profile__profession">Исследователь океана</p>
 						</div>
 					</div>
 
-					<button class="profile__add hover" type="button"></button>
+					<button class="profile__add hover" type="button" data-path="card-popup"></button>
 				</div>
 			</div>
 		</section>
@@ -133,10 +133,10 @@
 	</footer>
 
 	<div class="popup">
-		<div class="popup__container popup__container_change_profile">
+		<div class="popup__container" data-target="profile-popup">
 			<h3 class="popup__title">Редактировать профиль</h3>
 
-			<form class="popup__form" action="#" name="popup-profile-change">
+			<form class="popup__form popup__form_profile" action="#" name="popup-profile-change">
 				<input class="popup__input popup__input_js_name" type="text" name="popup-name" placeholder="Жак-Ив Кусто">
 				<input class="popup__input popup__input_js_profession" type="text" name="popup-prefession"
 					placeholder="Исследователь океана">
@@ -147,10 +147,10 @@
 			<button class="popup__close hover" type="button"></button>
 		</div>
 
-		<div class="popup__container popup__container_add_card">
+		<div class="popup__container" data-target="card-popup">
 			<h3 class="popup__title">Новое место</h3>
 
-			<form class="popup__form" action="#" name="popup-add-card">
+			<form class="popup__form popup__form_card" action="#" name="popup-add-card">
 				<input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название">
 				<input class="popup__input popup__input_js_link-card" type="text" name="popup-prefession"
 					placeholder="Ссылка на картинку">

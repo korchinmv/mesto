@@ -27,32 +27,63 @@ const initialCards = [
   },
 ];
 
-const editButton = document.querySelector(".profile__edit");
-const popup = document.querySelector(".popup");
-const closeButton = document.querySelector(".popup__close");
-const formElement = popup.querySelector(".popup__form");
-const nameInput = formElement.querySelector(".popup__input_js_name");
-const jobInput = formElement.querySelector(".popup__input_js_profession");
+const openPopupButtons = document.querySelectorAll("[data-path]");
+const overlay = document.querySelector(".popup");
+const closeButtonForm = overlay.querySelectorAll(".popup__close");
+const nameInput = overlay.querySelector(".popup__input_js_name");
+const jobInput = overlay.querySelector(".popup__input_js_profession");
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
+const modals = overlay.querySelectorAll(".popup__container");
 
-const popupOpened = () => {
-  popup.classList.add("popup_opened");
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileProfession.textContent;
+//Закрытие-открытие модальных окон//
+const openOverlay = () => {
+  overlay.classList.add("popup_opened");
+};
+
+const closeOverlay = () => {
+  overlay.classList.remove("popup_opened");
+};
+
+const popupOpen = (evt) => {
+  const path = evt.currentTarget.getAttribute("data-path");
+
+  document
+    .querySelector(`[data-target="${path}"]`)
+    .classList.add("popup__container_opened");
+
+  openOverlay();
 };
 
 const popupClose = () => {
-  popup.classList.remove("popup_opened");
+  modals.forEach((modal) => {
+    modal.classList.remove("popup__container_opened");
+  });
+
+  closeOverlay();
 };
 
-const handleFormSubmit = (evt) => {
+openPopupButtons.forEach((button) => {
+  button.addEventListener("click", (evt) => {
+    popupOpen(evt);
+  });
+});
+
+closeButtonForm.forEach((button) => {
+  button.addEventListener("click", () => {
+    popupClose();
+  });
+});
+
+//Редактирование профиля//
+const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
   popupClose();
+  closeOverlay();
 };
 
-formElement.addEventListener("submit", handleFormSubmit);
-editButton.addEventListener("click", popupOpened);
-closeButton.addEventListener("click", popupClose);
+overlay.addEventListener("submit", handleProfileFormSubmit);
+
+//Добавление карточки//
