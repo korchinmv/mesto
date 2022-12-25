@@ -29,14 +29,14 @@
 							<div class="profile__content-box">
 								<h1 class="profile__name">Жак-Ив Кусто</h1>
 
-								<button class="profile__edit hover" type="button" data-path="profile-popup"></button>
+								<button class="profile__edit hover" type="button"></button>
 							</div>
 
 							<p class="profile__profession">Исследователь океана</p>
 						</div>
 					</div>
 
-					<button class="profile__add hover" type="button" data-path="card-popup"></button>
+					<button class="profile__add hover" type="button"></button>
 				</div>
 			</div>
 		</section>
@@ -44,83 +44,9 @@
 		<section class="gallery">
 			<div class="container">
 				<ul class="gallery__list">
-					<li class="gallery__item">
-						<article class="card">
-							<img class="card__photo" src="./images/gallery/photo-1.jpg" alt="Карачаевск">
 
-							<div class="card__box">
-								<h2 class="card__name">Карачаевск</h2>
-								<button class="card__like-button hover" type="button">
-									<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
-								</button>
-							</div>
-						</article>
-					</li>
 
-					<li class="gallery__item">
-						<article class="card">
-							<img class="card__photo" src="./images/gallery/photo-2.jpg" alt="Гора Эльбрус">
 
-							<div class="card__box">
-								<h2 class="card__name">Гора Эльбрус</h2>
-								<button class="card__like-button hover" type="button">
-									<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
-								</button>
-							</div>
-						</article>
-					</li>
-
-					<li class="gallery__item">
-						<article class="card">
-							<img class="card__photo" src="./images/gallery/photo-3.jpg" alt="Домбай">
-
-							<div class="card__box">
-								<h2 class="card__name">Домбай</h2>
-								<button class="card__like-button hover" type="button">
-									<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
-								</button>
-							</div>
-						</article>
-					</li>
-
-					<li class="gallery__item">
-						<article class="card">
-							<img class="card__photo" src="./images/gallery/photo-4.jpg" alt="Гора Эльбрус">
-
-							<div class="card__box">
-								<h2 class="card__name">Гора Эльбрус</h2>
-								<button class="card__like-button hover" type="button">
-									<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
-								</button>
-							</div>
-						</article>
-					</li>
-
-					<li class="gallery__item">
-						<article class="card">
-							<img class="card__photo" src="./images/gallery/photo-5.jpg" alt="Домбай">
-
-							<div class="card__box">
-								<h2 class="card__name">Домбай</h2>
-								<button class="card__like-button hover" type="button">
-									<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
-								</button>
-							</div>
-						</article>
-					</li>
-
-					<li class="gallery__item">
-						<article class="card">
-							<img class="card__photo" src="./images/gallery/photo-6.jpg" alt="Карачаево-Черкесск">
-
-							<div class="card__box">
-								<h2 class="card__name">Карачаево-Черкесск</h2>
-								<button class="card__like-button hover" type="button">
-									<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
-								</button>
-							</div>
-						</article>
-					</li>
 				</ul>
 			</div>
 		</section>
@@ -133,13 +59,14 @@
 	</footer>
 
 	<div class="popup">
-		<div class="popup__container" data-target="profile-popup">
+		<div class="popup__container popup__container_profile">
 			<h3 class="popup__title">Редактировать профиль</h3>
 
 			<form class="popup__form popup__form_profile" action="#" name="popup-profile-change">
-				<input class="popup__input popup__input_js_name" type="text" name="popup-name" placeholder="Жак-Ив Кусто">
+				<input class="popup__input popup__input_js_name" type="text" name="popup-name" placeholder="Жак-Ив Кусто"
+					required>
 				<input class="popup__input popup__input_js_profession" type="text" name="popup-prefession"
-					placeholder="Исследователь океана">
+					placeholder="Исследователь океана" required>
 
 				<button class="popup__save" type="submit">Сохранить</button>
 			</form>
@@ -147,13 +74,14 @@
 			<button class="popup__close hover" type="button"></button>
 		</div>
 
-		<div class="popup__container" data-target="card-popup">
+		<div class="popup__container popup__container_card">
 			<h3 class="popup__title">Новое место</h3>
 
 			<form class="popup__form popup__form_card" action="#" name="popup-add-card">
-				<input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название">
+				<input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название"
+					required>
 				<input class="popup__input popup__input_js_link-card" type="text" name="popup-prefession"
-					placeholder="Ссылка на картинку">
+					placeholder="Ссылка на картинку" required>
 
 				<button class="popup__save" type="submit">Создать</button>
 			</form>
@@ -162,6 +90,20 @@
 		</div>
 	</div>
 
+	<template class="card-template">
+		<li class="gallery__item">
+			<article class="card">
+				<img class="card__photo" src="#" alt="Фотография">
+
+				<div class="card__box">
+					<h2 class="card__name">Карачаевск</h2>
+					<button class="card__like-button hover" type="button">
+						<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
+					</button>
+				</div>
+			</article>
+		</li>
+	</template>
 
 	<script src="./scripts/index.js"></script>
 </body>
