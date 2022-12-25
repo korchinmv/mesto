@@ -97,16 +97,14 @@ const handleProfileFormSubmit = (evt) => {
 
 overlay.addEventListener("submit", handleProfileFormSubmit);
 
-//Добавление карточки//
+//Добавление карточек из массива//
 const templateCard = document.querySelector(".card-template").content;
 const galleryList = document.querySelector(".gallery__list");
 
 const createCard = (card) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
-
   newCard.querySelector(".card__photo").src = card.link;
   newCard.querySelector(".card__name").textContent = card.name;
-
   return newCard;
 };
 
@@ -118,3 +116,24 @@ const renderCards = (cards, place) => {
 };
 
 renderCards(initialCards, galleryList);
+
+//Добавление новой карточки из формы
+const formCardPopup = document.querySelector(".popup__form_card");
+const nameCardFromPopup = formCardPopup.querySelector(
+  ".popup__input_js_name-card"
+);
+const linkCardFromPopup = formCardPopup.querySelector(
+  ".popup__input_js_link-card"
+);
+
+const addNewCard = (linkFromPopup, nameFromPopup) => {
+  const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
+  newCard.querySelector(".card__photo").src = linkFromPopup.value;
+  newCard.querySelector(".card__name").textContent = nameFromPopup.value;
+  return newCard;
+};
+
+formCardPopup.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  galleryList.prepend(addNewCard(linkCardFromPopup, nameCardFromPopup));
+});
