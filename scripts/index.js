@@ -77,7 +77,7 @@ const showErrorPopupCard = (link) => {
 const clearErrorPopupCard = (name, link) => {
   name.value = "";
   link.classList.remove("popup__input_js_link-card-error");
-  link.value = "test";
+  link.value = "";
   console.log("hi");
 };
 
@@ -147,12 +147,15 @@ const renderCards = (cards, place) => {
 renderCards(initialCards, galleryList);
 
 //Добавление новой карточки из формы
-
 const addNewCard = (linkFromPopup, nameFromPopup) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
+  const cardPhoto = newCard.querySelector(".card__photo");
 
   newCard.querySelector(".card__photo").src = linkFromPopup.value;
   newCard.querySelector(".card__name").textContent = nameFromPopup.value;
+  cardPhoto.onerror = function () {
+    cardPhoto.src = "./images/gallery/error.gif";
+  };
   return newCard;
 };
 
@@ -166,8 +169,8 @@ formCardPopup.addEventListener("submit", (evt) => {
     closePopupCard();
     closeOverlay();
     clearErrorPopupCard(nameCardFromPopup, inputCardFromPopup);
+  } else {
+    showErrorPopupCard(inputCardFromPopup);
+    return;
   }
-
-  showErrorPopupCard(inputCardFromPopup);
-  return;
 });

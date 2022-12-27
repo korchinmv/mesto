@@ -2,110 +2,110 @@
 <html lang="ru">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Mesto</title>
-	<link rel="stylesheet" href="./pages/index.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
 </head>
 
 <body class="page">
-	<header class="header">
-		<div class="container">
-			<div class="header__box">
-				<img class="header__logo" src="./images/logo.svg" alt="Логотип Mesto">
-			</div>
-		</div>
-	</header>
+  <header class="header">
+    <div class="container">
+      <div class="header__box">
+        <img class="header__logo" src="./images/logo.svg" alt="Логотип Mesto">
+      </div>
+    </div>
+  </header>
 
-	<main class="main">
-		<section class="profile">
-			<div class="container">
-				<div class="profile__inner">
-					<div class="profile__info">
-						<img class="profile__avatar" src="./images/avatars/kusto.jpg" alt="Аватарка">
+  <main class="main">
+    <section class="profile">
+      <div class="container">
+        <div class="profile__inner">
+          <div class="profile__info">
+            <img class="profile__avatar" src="./images/avatars/kusto.jpg" alt="Аватарка">
 
-						<div class="profile__content">
-							<div class="profile__content-box">
-								<h1 class="profile__name">Жак-Ив Кусто</h1>
+            <div class="profile__content">
+              <div class="profile__content-box">
+                <h1 class="profile__name">Жак-Ив Кусто</h1>
 
-								<button class="profile__edit hover" type="button"></button>
-							</div>
+                <button class="profile__edit hover" type="button"></button>
+              </div>
 
-							<p class="profile__profession">Исследователь океана</p>
-						</div>
-					</div>
+              <p class="profile__profession">Исследователь океана</p>
+            </div>
+          </div>
 
-					<button class="profile__add hover" type="button"></button>
-				</div>
-			</div>
-		</section>
+          <button class="profile__add hover" type="button"></button>
+        </div>
+      </div>
+    </section>
 
-		<section class="gallery">
-			<div class="container">
-				<ul class="gallery__list">
+    <section class="gallery">
+      <div class="container">
+        <ul class="gallery__list">
 
 
 
-				</ul>
-			</div>
-		</section>
-	</main>
+        </ul>
+      </div>
+    </section>
+  </main>
 
-	<footer class="footer">
-		<div class="container">
-			<p class="footer__copy">&#169; 2022 Mesto Russia</p>
-		</div>
-	</footer>
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__copy">&#169; 2022 Mesto Russia</p>
+    </div>
+  </footer>
 
-	<div class="popup">
-		<div class="popup__container popup__container_profile">
-			<h3 class="popup__title">Редактировать профиль</h3>
+  <div class="popup">
+    <div class="popup__container popup__container_profile">
+      <h3 class="popup__title">Редактировать профиль</h3>
 
-			<form class="popup__form popup__form_profile" action="#" name="popup-profile-change">
-				<input class="popup__input popup__input_js_name" type="text" name="popup-name-profession"
-					placeholder="Жак-Ив Кусто" required>
-				<input class="popup__input popup__input_js_profession" type="text" name="popup-job-prefession"
-					placeholder="Исследователь океана" required>
+      <form class="popup__form popup__form_profile" action="#" name="popup-profile-change">
+        <input class="popup__input popup__input_js_name" type="text" name="popup-name-profession"
+          placeholder="Жак-Ив Кусто" required>
+        <input class="popup__input popup__input_js_profession" type="text" name="popup-job-prefession"
+          placeholder="Исследователь океана" required>
 
-				<button class="popup__save" type="submit">Сохранить</button>
-			</form>
+        <button class="popup__save" type="submit">Сохранить</button>
+      </form>
 
-			<button class="popup__close hover" type="button"></button>
-		</div>
+      <button class="popup__close hover" type="button"></button>
+    </div>
 
-		<div class="popup__container popup__container_card">
-			<h3 class="popup__title">Новое место</h3>
+    <div class="popup__container popup__container_card">
+      <h3 class="popup__title">Новое место</h3>
 
-			<form class="popup__form popup__form_card" action="#" name="popup-add-card">
-				<input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название"
-					required maxlength="15">
-				<input class="popup__input popup__input_js_link-card" type="text" name="popup-link-card"
-					placeholder="Ссылка на картинку" required>
+      <form class="popup__form popup__form_card" action="#" name="popup-add-card">
+        <input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название"
+          required maxlength="15">
+        <input class="popup__input popup__input_js_link-card" type="text" name="popup-link-card"
+          placeholder="Ссылка на картинку" required>
 
-				<button class="popup__save" type="submit">Создать</button>
-			</form>
+        <button class="popup__save" type="submit">Создать</button>
+      </form>
 
-			<button class="popup__close hover" type="button"></button>
-		</div>
-	</div>
+      <button class="popup__close hover" type="button"></button>
+    </div>
+  </div>
 
-	<template class="card-template">
-		<li class="gallery__item">
-			<article class="card">
-				<img class="card__photo" src="#" alt="Фотография" onerror="">
+  <template class="card-template">
+    <li class="gallery__item">
+      <article class="card">
+        <img class="card__photo" src="#" alt="Фотография">
 
-				<div class="card__box">
-					<h2 class="card__name">Карачаевск</h2>
-					<button class="card__like-button hover" type="button">
-						<img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
-					</button>
-				</div>
-			</article>
-		</li>
-	</template>
+        <div class="card__box">
+          <h2 class="card__name">Карачаевск</h2>
+          <button class="card__like-button hover" type="button">
+            <img class="card__like-icon" src="./images/svg/like.svg" alt="Иконка сердечко">
+          </button>
+        </div>
+      </article>
+    </li>
+  </template>
 
-	<script src="./scripts/index.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>
