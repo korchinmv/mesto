@@ -5,10 +5,6 @@
 	font-size: 18px;
 	line-height: 1.2;
 	position: relative;
-
-}
-
-.wrapper {
 	display: flex;
 	flex-direction: column;
 	min-height: 100%;
