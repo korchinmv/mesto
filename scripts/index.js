@@ -193,3 +193,13 @@ likeButtons.forEach((button) => {
     likeAdd(button);
   });
 });
+
+//Удаление карточки
+const deleteCardButtons = document.querySelectorAll(".card__trash-button");
+
+deleteCardButtons.forEach((button) => {
+  button.addEventListener("click", (evt) => {
+    const targetElement = evt.target;
+    targetElement.closest(".gallery__item").remove();
+  });
+});
