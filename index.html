@@ -63,9 +63,9 @@
 			<h3 class="popup__title">Редактировать профиль</h3>
 
 			<form class="popup__form popup__form_profile" action="#" name="popup-profile-change">
-				<input class="popup__input popup__input_js_name" type="text" name="popup-name" placeholder="Жак-Ив Кусто"
-					required>
-				<input class="popup__input popup__input_js_profession" type="text" name="popup-prefession"
+				<input class="popup__input popup__input_js_name" type="text" name="popup-name-profession"
+					placeholder="Жак-Ив Кусто" required>
+				<input class="popup__input popup__input_js_profession" type="text" name="popup-job-prefession"
 					placeholder="Исследователь океана" required>
 
 				<button class="popup__save" type="submit">Сохранить</button>
@@ -79,8 +79,8 @@
 
 			<form class="popup__form popup__form_card" action="#" name="popup-add-card">
 				<input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название"
-					required>
-				<input class="popup__input popup__input_js_link-card" type="text" name="popup-prefession"
+					required maxlength="15">
+				<input class="popup__input popup__input_js_link-card" type="text" name="popup-link-card"
 					placeholder="Ссылка на картинку" required>
 
 				<button class="popup__save" type="submit">Создать</button>
@@ -93,7 +93,7 @@
 	<template class="card-template">
 		<li class="gallery__item">
 			<article class="card">
-				<img class="card__photo" src="#" alt="Фотография" onerror="./images/gallery/error.gif">
+				<img class="card__photo" src="#" alt="Фотография" onerror="">
 
 				<div class="card__box">
 					<h2 class="card__name">Карачаевск</h2>

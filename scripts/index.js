@@ -26,6 +26,14 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+const formCardPopup = document.querySelector(".popup__form_card");
+
+const nameCardFromPopup = formCardPopup.querySelector(
+  ".popup__input_js_name-card"
+);
+const inputCardFromPopup = formCardPopup.querySelector(
+  ".popup__input_js_link-card"
+);
 
 //Открытие и закрытие оверлея//
 const overlay = document.querySelector(".popup");
@@ -60,6 +68,19 @@ closeButtonForm.forEach((button) => {
   });
 });
 
+//Добавление и удаления класса ошибки в инпут
+const showErrorPopupCard = (link) => {
+  link.classList.add("popup__input_js_link-card-error");
+  link.value = "Неверно указана ссылка";
+};
+
+const clearErrorPopupCard = (name, link) => {
+  name.value = "";
+  link.classList.remove("popup__input_js_link-card-error");
+  link.value = "test";
+  console.log("hi");
+};
+
 //Открытие и закрытие попапа редактирования карточки
 const cardOpenButton = document.querySelector(".profile__add");
 const popupCard = document.querySelector(".popup__container_card");
@@ -69,9 +90,10 @@ const openPopupCard = () => {
   openOverlay();
 };
 
-const closePopupCard = (evt) => {
+const closePopupCard = () => {
   popupCard.classList.remove("popup__container_card_opened");
   closeOverlay();
+  clearErrorPopupCard(nameCardFromPopup, inputCardFromPopup);
 };
 
 cardOpenButton.addEventListener("click", openPopupCard);
@@ -82,10 +104,16 @@ closeButtonForm.forEach((button) => {
 });
 
 //Редактирование профиля//
+const popupForm = overlay.querySelector(".popup__form");
 const nameInput = overlay.querySelector(".popup__input_js_name");
 const jobInput = overlay.querySelector(".popup__input_js_profession");
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
+
+const clearInputProfile = () => {
+  nameInput.value = "";
+  jobInput.value = "";
+};
 
 const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
@@ -93,9 +121,10 @@ const handleProfileFormSubmit = (evt) => {
   profileProfession.textContent = jobInput.value;
   closePopupProfile();
   closeOverlay();
+  clearInputProfile();
 };
 
-overlay.addEventListener("submit", handleProfileFormSubmit);
+popupForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Добавление карточек из массива//
 const templateCard = document.querySelector(".card-template").content;
@@ -118,16 +147,10 @@ const renderCards = (cards, place) => {
 renderCards(initialCards, galleryList);
 
 //Добавление новой карточки из формы
-const formCardPopup = document.querySelector(".popup__form_card");
-const nameCardFromPopup = formCardPopup.querySelector(
-  ".popup__input_js_name-card"
-);
-const linkCardFromPopup = formCardPopup.querySelector(
-  ".popup__input_js_link-card"
-);
 
 const addNewCard = (linkFromPopup, nameFromPopup) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
+
   newCard.querySelector(".card__photo").src = linkFromPopup.value;
   newCard.querySelector(".card__name").textContent = nameFromPopup.value;
   return newCard;
@@ -135,5 +158,16 @@ const addNewCard = (linkFromPopup, nameFromPopup) => {
 
 formCardPopup.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  galleryList.prepend(addNewCard(linkCardFromPopup, nameCardFromPopup));
+  if (
+    inputCardFromPopup.value.toLowerCase().includes("https://") ||
+    inputCardFromPopup.value.toLowerCase().includes("http://")
+  ) {
+    galleryList.prepend(addNewCard(inputCardFromPopup, nameCardFromPopup));
+    closePopupCard();
+    closeOverlay();
+    clearErrorPopupCard(nameCardFromPopup, inputCardFromPopup);
+  }
+
+  showErrorPopupCard(inputCardFromPopup);
+  return;
 });
