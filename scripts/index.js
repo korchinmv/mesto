@@ -174,3 +174,22 @@ formCardPopup.addEventListener("submit", (evt) => {
     return;
   }
 });
+
+//Лайк карточке
+const likeButtons = document.querySelectorAll(".card__like-icon");
+
+const likeAdd = (button) => {
+  if (button.classList.contains("card__like-icon_active")) {
+    button.src = "./images/svg/like-active.svg";
+  } else {
+    button.src = "./images/svg/like.svg";
+  }
+};
+
+likeButtons.forEach((button) => {
+  button.addEventListener("click", (evt) => {
+    const targetElement = evt.target;
+    targetElement.classList.toggle("card__like-icon_active");
+    likeAdd(button);
+  });
+});
