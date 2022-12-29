@@ -42,6 +42,5 @@
 @import url(../blocks/popup/__container/_profile_opened/popup__container_profile_opened.css);
 @import url(../blocks/popup/__title/popup__title.css);
 @import url(../blocks/popup/__input/popup__input.css);
-@import url(../blocks/popup/__input/_js_link-card-error/popup__input_js_link-card-error.css);
 @import url(../blocks/popup/__save/popup__save.css);
 @import url(../blocks/popup/__close/popup__close.css);
