@@ -2,6 +2,7 @@
 	display: block;
 	border-radius: inherit 0;
 	background-color: #c4c4c4;
+	cursor: pointer;
 	object-fit: cover;
 	height: 282px;
 	max-width: 100%;

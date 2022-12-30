@@ -89,6 +89,18 @@ const handleProfileFormSubmit = (evt) => {
 
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
+//Открытие попапа с фоткой
+const popupImage = document.querySelector(".popup__image");
+const popupFigcaption = document.querySelector(".popup__figcaption");
+const popupPhoto = document.querySelector(".popup__photo");
+
+const renderPopupImage = (card) => {
+  popupImage.src = "";
+};
+
+//Закрытие попапа с картинкой
+const closePopupPhoto = () => {};
+
 //Создаем карточку
 const templateCard = document.querySelector(".card-template").content;
 const galleryList = document.querySelector(".gallery__list");
@@ -103,20 +115,22 @@ const createCard = (card) => {
 
   newCard.addEventListener("click", (evt) => {
     const targetElement = evt.target;
+
     //Лайк карточке
     if (targetElement.classList.contains("card__like-icon")) {
       targetElement.classList.toggle("card__like-icon_active");
     }
 
-    if (targetElement.classList.contains("card__like-icon_active")) {
-      targetElement.src = "./images/svg/like-active.svg";
-    } else {
-      targetElement.src = "./images/svg/like.svg";
-    }
-
     //Удаление карточки
     if (targetElement.classList.contains("card__trash-icon")) {
       newCard.remove();
+    }
+
+    //Открытие попапа с фото
+    if (targetElement.classList.contains("card__photo")) {
+      openOverlay();
+      popupPhoto.classList.add("popup__photo_opened");
+      popupPhoto.src = targetElement.src;
     }
   });
 
