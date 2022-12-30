@@ -43,11 +43,7 @@
 
     <section class="gallery">
       <div class="container">
-        <ul class="gallery__list">
-
-
-
-        </ul>
+        <ul class="gallery__list"></ul>
       </div>
     </section>
   </main>
@@ -80,7 +76,7 @@
       <form class="popup__form popup__form_card" action="#" name="popup-add-card">
         <input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название"
           required maxlength="15">
-        <input class="popup__input popup__input_js_link-card" type="text" name="popup-link-card"
+        <input class="popup__input popup__input_js_link-card" type="url" name="popup-link-card"
           placeholder="Ссылка на картинку" required>
 
         <button class="popup__save" type="submit">Создать</button>
@@ -93,7 +89,11 @@
   <template class="card-template">
     <li class="gallery__item">
       <article class="card">
-        <img class="card__photo" src="#" alt="Фотография" onerror="">
+        <button class="card__trash-button hover" type="button">
+          <img class="card__trash-icon" src="./images/svg/trash.svg" alt="Иконка урна">
+        </button>
+
+        <img class="card__photo" src="#" alt="Фотография">
 
         <div class="card__box">
           <h2 class="card__name">Карачаевск</h2>
@@ -105,7 +105,7 @@
     </li>
   </template>
 
-  <script src="./scripts/index.js"></script>
+  <script src="./scripts/index.js" type="module"></script>
 </body>
 
 </html>

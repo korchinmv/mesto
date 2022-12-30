@@ -1,33 +1,8 @@
 "use strict";
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-const formCardPopup = document.querySelector(".popup__form_card");
+import { initialCards } from "./cards.js";
 
+const formCardPopup = document.querySelector(".popup__form_card");
 const nameCardFromPopup = formCardPopup.querySelector(
   ".popup__input_js_name-card"
 );
@@ -68,20 +43,7 @@ closeButtonForm.forEach((button) => {
   });
 });
 
-//Добавление и удаления класса ошибки в инпут
-const showErrorPopupCard = (link) => {
-  link.classList.add("popup__input_js_link-card-error");
-  link.value = "Неверно указана ссылка";
-};
-
-const clearErrorPopupCard = (name, link) => {
-  name.value = "";
-  link.classList.remove("popup__input_js_link-card-error");
-  link.value = "test";
-  console.log("hi");
-};
-
-//Открытие и закрытие попапа редактирования карточки
+//Открытие и закрытие попапа добавления карточки
 const cardOpenButton = document.querySelector(".profile__add");
 const popupCard = document.querySelector(".popup__container_card");
 
@@ -93,10 +55,10 @@ const openPopupCard = () => {
 const closePopupCard = () => {
   popupCard.classList.remove("popup__container_card_opened");
   closeOverlay();
-  clearErrorPopupCard(nameCardFromPopup, inputCardFromPopup);
 };
 
 cardOpenButton.addEventListener("click", openPopupCard);
+
 closeButtonForm.forEach((button) => {
   button.addEventListener("click", (evt) => {
     closePopupCard(evt.target);
@@ -110,6 +72,7 @@ const jobInput = overlay.querySelector(".popup__input_js_profession");
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
 
+//Очищаем инпуты
 const clearInputProfile = () => {
   nameInput.value = "";
   jobInput.value = "";
@@ -126,7 +89,7 @@ const handleProfileFormSubmit = (evt) => {
 
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
-//Добавление карточек из массива//
+//Создаем карточку
 const templateCard = document.querySelector(".card-template").content;
 const galleryList = document.querySelector(".gallery__list");
 
@@ -134,9 +97,33 @@ const createCard = (card) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
   newCard.querySelector(".card__photo").src = card.link;
   newCard.querySelector(".card__name").textContent = card.name;
+  newCard.onerror = function () {
+    newCard.src = "./images/gallery/error.gif";
+  };
+
+  newCard.addEventListener("click", (evt) => {
+    const targetElement = evt.target;
+    //Лайк карточке
+    if (targetElement.classList.contains("card__like-icon")) {
+      targetElement.classList.toggle("card__like-icon_active");
+    }
+
+    if (targetElement.classList.contains("card__like-icon_active")) {
+      targetElement.src = "./images/svg/like-active.svg";
+    } else {
+      targetElement.src = "./images/svg/like.svg";
+    }
+
+    //Удаление карточки
+    if (targetElement.classList.contains("card__trash-icon")) {
+      newCard.remove();
+    }
+  });
+
   return newCard;
 };
 
+//Добавление карточек из существуещего массива
 const renderCards = (cards, place) => {
   cards.forEach((card) => {
     const cardHtml = createCard(card);
@@ -146,28 +133,21 @@ const renderCards = (cards, place) => {
 
 renderCards(initialCards, galleryList);
 
-//Добавление новой карточки из формы
-
-const addNewCard = (linkFromPopup, nameFromPopup) => {
-  const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
-
-  newCard.querySelector(".card__photo").src = linkFromPopup.value;
-  newCard.querySelector(".card__name").textContent = nameFromPopup.value;
-  return newCard;
+//Слушатель добавление карточки из формы
+const clearFormCard = () => {
+  nameCardFromPopup.value = "";
+  inputCardFromPopup.value = "";
 };
 
 formCardPopup.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  if (
-    inputCardFromPopup.value.toLowerCase().includes("https://") ||
-    inputCardFromPopup.value.toLowerCase().includes("http://")
-  ) {
-    galleryList.prepend(addNewCard(inputCardFromPopup, nameCardFromPopup));
-    closePopupCard();
-    closeOverlay();
-    clearErrorPopupCard(nameCardFromPopup, inputCardFromPopup);
-  }
+  const newObjCard = {
+    name: nameCardFromPopup.value,
+    link: inputCardFromPopup.value,
+  };
 
-  showErrorPopupCard(inputCardFromPopup);
-  return;
+  galleryList.prepend(createCard(newObjCard));
+  closePopupCard();
+  closeOverlay();
+  clearFormCard();
 });
