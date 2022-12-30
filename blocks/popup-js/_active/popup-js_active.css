@@ -1,4 +1,4 @@
-.popup__container_profile_opened {
+.popup-js_active {
 	opacity: 1;
 	visibility: visible;
 }

@@ -15,6 +15,7 @@ const profileOpenButton = document.querySelector(".profile__edit");
 const popupProfile = document.querySelector(".popup__container_profile");
 const cardOpenButton = document.querySelector(".profile__add");
 const popupCard = document.querySelector(".popup__container_card");
+const formSubmitButtons = document.querySelectorAll(".popup__save");
 
 const popupForm = overlay.querySelector(".popup__form");
 const nameInput = overlay.querySelector(".popup__input_js_name");
@@ -23,7 +24,8 @@ const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
 
 const popupImage = document.querySelector(".popup__image");
-const popupPhoto = document.querySelector(".popup__photo");
+const popupPhotoPopup = document.querySelector(".popup__photo");
+const popupPhotoName = document.querySelector(".popup__caption");
 
 //Открытие и закрытие оверлея//
 const openOverlay = () => {
@@ -34,54 +36,48 @@ const closeOverlay = () => {
   overlay.classList.remove("popup_opened");
 };
 
-//Открытие и закрытие попапа профиля
+//Открытие попапа профиля
 const openPopupProfile = () => {
-  popupProfile.classList.add("popup__container_profile_opened");
+  popupProfile.classList.add("popup-js_active");
   openOverlay();
-};
-
-const closePopupProfile = () => {
-  popupProfile.classList.remove("popup__container_profile_opened");
-  closeOverlay();
 };
 
 profileOpenButton.addEventListener("click", openPopupProfile);
-closeButtonForm.forEach((button) => {
-  button.addEventListener("click", (evt) => {
-    closePopupProfile(evt.target);
-  });
-});
 
-//Открытие и закрытие попапа добавления карточки
+//Открытие попапа добавления карточки
 const openPopupCard = () => {
-  popupCard.classList.add("popup__container_card_opened");
+  popupCard.classList.add("popup-js_active");
   openOverlay();
-};
-
-const closePopupCard = () => {
-  popupCard.classList.remove("popup__container_card_opened");
-  closeOverlay();
 };
 
 cardOpenButton.addEventListener("click", openPopupCard);
 
-closeButtonForm.forEach((button) => {
-  button.addEventListener("click", (evt) => {
-    closePopupCard(evt.target);
+//Закрытие попапов по отправке формы
+const closePopupForm = (buttons) => {
+  buttons.forEach((button) => {
+    button.addEventListener("click", (evt) => {
+      const parent = evt.target.closest(".popup-js");
+      parent.classList.remove("popup-js_active");
+      closeOverlay();
+    });
   });
-});
+};
 
-//Очищаем инпуты
+closePopupForm(closeButtonForm);
+closePopupForm(formSubmitButtons);
+
+//Очищаем инпуты у формы в профиле
 const clearInputProfile = () => {
   nameInput.value = "";
   jobInput.value = "";
 };
 
+//Редактирование профиля
 const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
-  closePopupProfile();
+  closePopupForm(formSubmitButtons);
   closeOverlay();
   clearInputProfile();
 };
@@ -89,7 +85,6 @@ const handleProfileFormSubmit = (evt) => {
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Открытие попапа с фоткой
-
 const renderPopupImage = (card) => {
   popupImage.src = "";
 };
@@ -124,9 +119,10 @@ const createCard = (card) => {
 
     //Открытие попапа с фото
     if (targetElement.classList.contains("card__photo")) {
-      openOverlay();
-      popupPhoto.classList.add("popup__photo_opened");
-      popupPhoto.src = targetElement.src;
+      popupPhotoName.textContent = card.name;
+      popupImage.src = targetElement.src;
+      popupPhotoName.textContent = openOverlay();
+      popupPhotoPopup.classList.add("popup-js_active");
     }
   });
 
@@ -143,7 +139,7 @@ const renderCards = (cards, place) => {
 
 renderCards(initialCards, galleryList);
 
-//Слушатель добавление карточки из формы
+//Добавление карточки на страницу из формы
 const clearFormCard = () => {
   nameCardFromPopup.value = "";
   inputCardFromPopup.value = "";
@@ -157,7 +153,7 @@ formCardPopup.addEventListener("submit", (evt) => {
   };
 
   galleryList.prepend(createCard(newObjCard));
-  closePopupCard();
+  closePopupForm(formSubmitButtons);
   closeOverlay();
   clearFormCard();
 });
