@@ -9,11 +9,23 @@ const nameCardFromPopup = formCardPopup.querySelector(
 const inputCardFromPopup = formCardPopup.querySelector(
   ".popup__input_js_link-card"
 );
-
-//Открытие и закрытие оверлея//
 const overlay = document.querySelector(".popup");
 const closeButtonForm = overlay.querySelectorAll(".popup__close");
+const profileOpenButton = document.querySelector(".profile__edit");
+const popupProfile = document.querySelector(".popup__container_profile");
+const cardOpenButton = document.querySelector(".profile__add");
+const popupCard = document.querySelector(".popup__container_card");
 
+const popupForm = overlay.querySelector(".popup__form");
+const nameInput = overlay.querySelector(".popup__input_js_name");
+const jobInput = overlay.querySelector(".popup__input_js_profession");
+const profileName = document.querySelector(".profile__name");
+const profileProfession = document.querySelector(".profile__profession");
+
+const popupImage = document.querySelector(".popup__image");
+const popupPhoto = document.querySelector(".popup__photo");
+
+//Открытие и закрытие оверлея//
 const openOverlay = () => {
   overlay.classList.add("popup_opened");
 };
@@ -23,9 +35,6 @@ const closeOverlay = () => {
 };
 
 //Открытие и закрытие попапа профиля
-const profileOpenButton = document.querySelector(".profile__edit");
-const popupProfile = document.querySelector(".popup__container_profile");
-
 const openPopupProfile = () => {
   popupProfile.classList.add("popup__container_profile_opened");
   openOverlay();
@@ -44,9 +53,6 @@ closeButtonForm.forEach((button) => {
 });
 
 //Открытие и закрытие попапа добавления карточки
-const cardOpenButton = document.querySelector(".profile__add");
-const popupCard = document.querySelector(".popup__container_card");
-
 const openPopupCard = () => {
   popupCard.classList.add("popup__container_card_opened");
   openOverlay();
@@ -64,13 +70,6 @@ closeButtonForm.forEach((button) => {
     closePopupCard(evt.target);
   });
 });
-
-//Редактирование профиля//
-const popupForm = overlay.querySelector(".popup__form");
-const nameInput = overlay.querySelector(".popup__input_js_name");
-const jobInput = overlay.querySelector(".popup__input_js_profession");
-const profileName = document.querySelector(".profile__name");
-const profileProfession = document.querySelector(".profile__profession");
 
 //Очищаем инпуты
 const clearInputProfile = () => {
@@ -90,9 +89,6 @@ const handleProfileFormSubmit = (evt) => {
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Открытие попапа с фоткой
-const popupImage = document.querySelector(".popup__image");
-const popupFigcaption = document.querySelector(".popup__figcaption");
-const popupPhoto = document.querySelector(".popup__photo");
 
 const renderPopupImage = (card) => {
   popupImage.src = "";
@@ -117,8 +113,8 @@ const createCard = (card) => {
     const targetElement = evt.target;
 
     //Лайк карточке
-    if (targetElement.classList.contains("card__like-icon")) {
-      targetElement.classList.toggle("card__like-icon_active");
+    if (targetElement.classList.contains("card__like-button")) {
+      targetElement.classList.toggle("card__like-button_active");
     }
 
     //Удаление карточки
