@@ -84,14 +84,6 @@ const handleProfileFormSubmit = (evt) => {
 
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
-//Открытие попапа с фоткой
-const renderPopupImage = (card) => {
-  popupImage.src = "";
-};
-
-//Закрытие попапа с картинкой
-const closePopupPhoto = () => {};
-
 //Создаем карточку
 const templateCard = document.querySelector(".card-template").content;
 const galleryList = document.querySelector(".gallery__list");
@@ -119,7 +111,7 @@ const createCard = (card) => {
 
     //Открытие попапа с фото
     if (targetElement.classList.contains("card__photo")) {
-      popupPhotoName.textContent = card.name;
+      // popupPhotoName.textContent = card.name;
       popupImage.src = targetElement.src;
       popupPhotoName.textContent = openOverlay();
       popupPhotoPopup.classList.add("popup-js_active");
