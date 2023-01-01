@@ -91,6 +91,7 @@ const galleryList = document.querySelector(".gallery__list");
 const createCard = (card) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
   newCard.querySelector(".card__photo").src = card.link;
+  newCard.querySelector(".card__photo").alt = `Фотография ${card.name}`;
   newCard.querySelector(".card__name").textContent = card.name;
   newCard.onerror = function () {
     newCard.src = "./images/gallery/error.gif";
@@ -111,9 +112,9 @@ const createCard = (card) => {
 
     //Открытие попапа с фото
     if (targetElement.classList.contains("card__photo")) {
-      // popupPhotoName.textContent = card.name;
+      popupPhotoName.textContent = targetElement.getAttribute("alt").slice(11);
       popupImage.src = targetElement.src;
-      popupPhotoName.textContent = openOverlay();
+      openOverlay();
       popupPhotoPopup.classList.add("popup-js_active");
     }
   });
