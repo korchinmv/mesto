@@ -57,6 +57,7 @@ const closeFormProfile = () => {
   popupProfile.classList.remove("popup__container_profile_active");
   clearFormCard();
   closeOverlay();
+  clearInputProfile();
 };
 closeButtonProfileForm.addEventListener("click", closeFormProfile);
 
@@ -64,6 +65,7 @@ closeButtonProfileForm.addEventListener("click", closeFormProfile);
 const closeFormCard = () => {
   popupCard.classList.remove("popup__container_card_active");
   closeOverlay();
+  clearFormCard();
 };
 closeButtonCardForm.addEventListener("click", closeFormCard);
 
