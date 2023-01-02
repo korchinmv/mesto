@@ -56,6 +56,7 @@ cardOpenButton.addEventListener("click", openPopupCard);
 const closeFormProfile = () => {
   popupProfile.classList.remove("popup__container_profile_active");
   clearFormCard();
+  closeOverlay();
 };
 closeButtonProfileForm.addEventListener("click", closeFormProfile);
 
