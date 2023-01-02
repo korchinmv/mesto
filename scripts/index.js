@@ -10,22 +10,21 @@ const inputCardFromPopup = formCardPopup.querySelector(
   ".popup__input_js_link-card"
 );
 const overlay = document.querySelector(".popup");
-const closeButtonForm = overlay.querySelectorAll(".popup__close");
 const profileOpenButton = document.querySelector(".profile__edit");
 const popupProfile = document.querySelector(".popup__container_profile");
 const cardOpenButton = document.querySelector(".profile__add");
 const popupCard = document.querySelector(".popup__container_card");
-const formSubmitButtons = document.querySelectorAll(".popup__save");
-
 const popupForm = overlay.querySelector(".popup__form");
 const nameInput = overlay.querySelector(".popup__input_js_name");
 const jobInput = overlay.querySelector(".popup__input_js_profession");
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
-
 const popupImage = document.querySelector(".popup__image");
 const popupPhotoPopup = document.querySelector(".popup__photo");
 const popupPhotoName = document.querySelector(".popup__caption");
+const closeButtonProfileForm = document.querySelector(".close-profile-form");
+const closeButtonCardForm = document.querySelector(".close-card-form");
+const formCardActive = document.querySelector(".popup__container_card_active");
 
 //Открытие и закрытие оверлея//
 const openOverlay = () => {
@@ -38,33 +37,31 @@ const closeOverlay = () => {
 
 //Открытие попапа профиля
 const openPopupProfile = () => {
-  popupProfile.classList.add("popup-js_active");
+  popupProfile.classList.add("popup__container_profile_active");
   openOverlay();
 };
-
 profileOpenButton.addEventListener("click", openPopupProfile);
 
 //Открытие попапа добавления карточки
 const openPopupCard = () => {
-  popupCard.classList.add("popup-js_active");
+  popupCard.classList.add("popup__container_card_active");
   openOverlay();
 };
-
 cardOpenButton.addEventListener("click", openPopupCard);
 
-//Закрытие попапов по отправке формы
-const closePopupForm = (buttons) => {
-  buttons.forEach((button) => {
-    button.addEventListener("click", (evt) => {
-      const parent = evt.target.closest(".popup-js");
-      parent.classList.remove("popup-js_active");
-      closeOverlay();
-    });
-  });
+//Закрытие попапа профиля
+const closeFormProfile = () => {
+  popupProfile.classList.remove("popup__container_profile_active");
+  clearFormCard();
 };
+closeButtonProfileForm.addEventListener("click", closeFormProfile);
 
-closePopupForm(closeButtonForm);
-closePopupForm(formSubmitButtons);
+//Закрытие попапа карточки
+const closeFormCard = () => {
+  popupCard.classList.remove("popup__container_card_active");
+  closeOverlay();
+};
+closeButtonCardForm.addEventListener("click", closeFormCard);
 
 //Очищаем инпуты у формы в профиле
 const clearInputProfile = () => {
@@ -77,11 +74,10 @@ const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
-  closePopupForm(formSubmitButtons);
+  closeFormProfile(closeButtonProfileForm, popupProfile);
   closeOverlay();
   clearInputProfile();
 };
-
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Создаем карточку
@@ -115,7 +111,13 @@ const createCard = (card) => {
       popupPhotoName.textContent = targetElement.getAttribute("alt").slice(11);
       popupImage.src = targetElement.src;
       openOverlay();
-      popupPhotoPopup.classList.add("popup-js_active");
+      popupPhotoPopup.classList.add("popup__photo_opened");
+    }
+
+    //Закрытие попапа с фото
+    if (targetElement.classList.contains("close-photo-popup")) {
+      popupPhotoPopup.classList.remove("popup__photo_opened");
+      closeOverlay();
     }
   });
 
@@ -129,7 +131,6 @@ const renderCards = (cards, place) => {
     place.append(cardHtml);
   });
 };
-
 renderCards(initialCards, galleryList);
 
 //Добавление карточки на страницу из формы
@@ -146,7 +147,7 @@ formCardPopup.addEventListener("submit", (evt) => {
   };
 
   galleryList.prepend(createCard(newObjCard));
-  closePopupForm(formSubmitButtons);
+  closeFormCard(closeButtonCardForm, formCardActive);
   closeOverlay();
   clearFormCard();
 });
