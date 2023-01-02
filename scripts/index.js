@@ -19,12 +19,15 @@ const nameInput = overlay.querySelector(".popup__input_js_name");
 const jobInput = overlay.querySelector(".popup__input_js_profession");
 const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
+const templateCard = document.querySelector(".card-template").content;
+const galleryList = document.querySelector(".gallery__list");
 const popupImage = document.querySelector(".popup__image");
 const popupPhotoPopup = document.querySelector(".popup__photo");
 const popupPhotoName = document.querySelector(".popup__caption");
 const closeButtonProfileForm = document.querySelector(".close-profile-form");
 const closeButtonCardForm = document.querySelector(".close-card-form");
 const formCardActive = document.querySelector(".popup__container_card_active");
+const closeButtonPopup = document.querySelector(".close-photo-popup");
 
 //Открытие и закрытие оверлея//
 const openOverlay = () => {
@@ -81,9 +84,6 @@ const handleProfileFormSubmit = (evt) => {
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Создаем карточку
-const templateCard = document.querySelector(".card-template").content;
-const galleryList = document.querySelector(".gallery__list");
-
 const createCard = (card) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
   newCard.querySelector(".card__photo").src = card.link;
@@ -113,16 +113,16 @@ const createCard = (card) => {
       openOverlay();
       popupPhotoPopup.classList.add("popup__photo_opened");
     }
-
-    //Закрытие попапа с фото
-    if (targetElement.classList.contains("close-photo-popup")) {
-      popupPhotoPopup.classList.remove("popup__photo_opened");
-      closeOverlay();
-    }
   });
-
   return newCard;
 };
+
+//Закрытие попапа с фото
+const closePhotoPopup = () => {
+  popupPhotoPopup.classList.remove("popup__photo_opened");
+  closeOverlay();
+};
+closeButtonPopup.addEventListener("click", closePhotoPopup);
 
 //Добавление карточек из существуещего массива
 const renderCards = (cards, place) => {
@@ -133,12 +133,13 @@ const renderCards = (cards, place) => {
 };
 renderCards(initialCards, galleryList);
 
-//Добавление карточки на страницу из формы
+//Очищаем форму создания карточки
 const clearFormCard = () => {
   nameCardFromPopup.value = "";
   inputCardFromPopup.value = "";
 };
 
+//Добавление карточки на страницу из формы
 formCardPopup.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const newObjCard = {
