@@ -8,9 +8,6 @@
 	max-width: 430px;
 	min-height: 272px;
 	width: 100%;
-	opacity: 0;
-	visibility: hidden;
-	transition: opacity 0.3s, visibility 0.3s ease-in-out;
 }
 
 @media screen and (max-width: 768px) {

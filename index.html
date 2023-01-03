@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Mesto</title>
 	<link rel="stylesheet" href="./pages/index.css">
+	<script defer src="./scripts/index.js" type="module"></script>
 </head>
 
 <body class="page">
@@ -29,14 +30,14 @@
 							<div class="profile__content-box">
 								<h1 class="profile__name">Жак-Ив Кусто</h1>
 
-								<button class="profile__edit hover" type="button"></button>
+								<button class="profile__edit hover" type="button" aria-label="Редактировать профиль"></button>
 							</div>
 
 							<p class="profile__profession">Исследователь океана</p>
 						</div>
 					</div>
 
-					<button class="profile__add hover" type="button"></button>
+					<button class="profile__add hover" type="button" aria-label="Добавить место"></button>
 				</div>
 			</div>
 		</section>
@@ -54,26 +55,28 @@
 		</div>
 	</footer>
 
-	<div class="popup">
-		<div class="popup__container popup__container_profile">
+	<div class="popup popup-profile">
+		<div class="popup__container">
 			<h3 class="popup__title">Редактировать профиль</h3>
 
-			<form class="popup__form popup__form_profile" action="#" name="popup-profile-change">
-				<input class="popup__input popup__input_js_name" type="text" name="popup-name-profession"
-					placeholder="Жак-Ив Кусто" required>
+			<form class="popup__form popup__form_profile" name="popup-profile-change">
+				<input class="popup__input popup__input_js_name" type="text" name="popup-name-profession" placeholder="Имя"
+					required>
 				<input class="popup__input popup__input_js_profession" type="text" name="popup-job-prefession"
-					placeholder="Исследователь океана" required>
+					placeholder="О себе" required>
 
 				<button class="popup__save submit-profile-form" type="submit">Сохранить</button>
 			</form>
 
-			<button class="popup__close hover close-profile-form" type="button"></button>
+			<button class="popup__close hover close-profile-form" type="button" aria-label="Закрыть"></button>
 		</div>
+	</div>
 
-		<div class="popup__container popup__container_card">
+	<div class="popup popup-card">
+		<div class="popup__container">
 			<h3 class="popup__title">Новое место</h3>
 
-			<form class="popup__form popup__form_card" action="#" name="popup-add-card">
+			<form class="popup__form popup__form_card" name="popup-add-card">
 				<input class="popup__input popup__input_js_name-card" type="text" name="popup-name-card" placeholder="Название"
 					required maxlength="20">
 
@@ -83,14 +86,14 @@
 				<button class="popup__save submit-card-form" type="submit">Создать</button>
 			</form>
 
-			<button class="popup__close hover close-card-form" type="button"></button>
+			<button class="popup__close hover close-card-form" type="button" aria-label="Закрыть"></button>
 		</div>
+	</div>
 
+	<div class="popup popup_overlay_dark">
 		<figure class="popup__photo">
-			<button class="popup__close close-photo-popup hover" type="button"></button>
-			<img class="popup__image"
-				src="https://placepic.ru/wp-content/uploads/2021/01/FF3mH8WjNnC2WlfFnSX34PFQycxOoEx0ViBmDS867A1Qs4DKSXt3TF2MYn0vLX7GiqgYZDBv9IU7JAx6FA3wqAAb7QWJ9yUh8QwVhux99aPsSJ7HTqAEaFt0IRIuOqsSG7CN9hQ.jpg"
-				alt="#">
+			<button class="popup__close close-photo-popup hover" type="button" aria-label="Закрыть"></button>
+			<img class="popup__image" src="#" alt="#">
 			<figcaption class="popup__figcaption">
 				<p class="popup__caption">Попап с картинкой</p>
 			</figcaption>
@@ -100,21 +103,18 @@
 	<template class="card-template">
 		<li class="gallery__item">
 			<article class="card">
-				<button class="card__trash-button hover" type="button">
-					<img class="card__trash-icon" src="./images/svg/trash.svg" alt="Иконка урна">
-				</button>
+				<button class="card__trash-button hover" type="button" aria-label="Удалить место"></button>
 
 				<img class="card__photo" src="#" alt="Фотография">
 
 				<div class="card__box">
 					<h2 class="card__name">Карачаевск</h2>
-					<button class="card__like-button hover" type="button"></button>
+					<button class="card__like-button hover" type="button" aria-label="Нравится"></button>
 				</div>
 			</article>
 		</li>
 	</template>
 
-	<script src="./scripts/index.js" type="module"></script>
 </body>
 
 </html>

@@ -2,18 +2,13 @@
 
 import { initialCards } from "./cards.js";
 
-const formCardPopup = document.querySelector(".popup__form_card");
-const nameCardFromPopup = formCardPopup.querySelector(
-  ".popup__input_js_name-card"
-);
-const inputCardFromPopup = formCardPopup.querySelector(
-  ".popup__input_js_link-card"
-);
+const cardForm = document.querySelector(".popup__form_card");
+const profileForm = document.querySelector(".popup__form_profile");
+const nameCardFromPopup = cardForm.querySelector(".popup__input_js_name-card");
+const inputCardFromPopup = cardForm.querySelector(".popup__input_js_link-card");
 const overlay = document.querySelector(".popup");
 const profileOpenButton = document.querySelector(".profile__edit");
-const popupProfile = document.querySelector(".popup__container_profile");
 const cardOpenButton = document.querySelector(".profile__add");
-const popupCard = document.querySelector(".popup__container_card");
 const popupForm = overlay.querySelector(".popup__form");
 const nameInput = overlay.querySelector(".popup__input_js_name");
 const jobInput = overlay.querySelector(".popup__input_js_profession");
@@ -26,72 +21,61 @@ const popupPhotoPopup = document.querySelector(".popup__photo");
 const popupPhotoName = document.querySelector(".popup__caption");
 const closeButtonProfileForm = document.querySelector(".close-profile-form");
 const closeButtonCardForm = document.querySelector(".close-card-form");
-const formCardActive = document.querySelector(".popup__container_card_active");
 const closeButtonPopup = document.querySelector(".close-photo-popup");
 
-//Открытие и закрытие оверлея//
-const openOverlay = () => {
-  overlay.classList.add("popup_opened");
+const popupProfile = document.querySelector(".popup-profile");
+const popupCard = document.querySelector(".popup-card");
+
+//Открытие и закрытие оверлея c попапами//
+const openPopup = (popup) => {
+  popup.classList.add("popup_opened");
 };
 
-const closeOverlay = () => {
-  overlay.classList.remove("popup_opened");
+const closePopup = (popup) => {
+  popup.classList.remove("popup_opened");
 };
 
 //Открытие попапа профиля
-const openPopupProfile = () => {
-  popupProfile.classList.add("popup__container_profile_active");
-  openOverlay();
-};
-profileOpenButton.addEventListener("click", openPopupProfile);
+profileOpenButton.addEventListener("click", () => {
+  openPopup(popupProfile);
+});
 
 //Открытие попапа добавления карточки
-const openPopupCard = () => {
-  popupCard.classList.add("popup__container_card_active");
-  openOverlay();
-};
-cardOpenButton.addEventListener("click", openPopupCard);
+cardOpenButton.addEventListener("click", () => {
+  openPopup(popupCard);
+});
 
 //Закрытие попапа профиля
-const closeFormProfile = () => {
-  popupProfile.classList.remove("popup__container_profile_active");
-  clearFormCard();
-  closeOverlay();
-  clearInputProfile();
-};
-closeButtonProfileForm.addEventListener("click", closeFormProfile);
+closeButtonProfileForm.addEventListener("click", () => {
+  closePopup(popupProfile);
+  profileForm.reset();
+});
 
-//Закрытие попапа карточки
-const closeFormCard = () => {
-  popupCard.classList.remove("popup__container_card_active");
-  closeOverlay();
-  clearFormCard();
-};
-closeButtonCardForm.addEventListener("click", closeFormCard);
-
-//Очищаем инпуты у формы в профиле
-const clearInputProfile = () => {
-  nameInput.value = "";
-  jobInput.value = "";
-};
+//Закрытие попапа добавления карточки
+closeButtonCardForm.addEventListener("click", () => {
+  closePopup(popupCard);
+  cardForm.reset();
+});
 
 //Редактирование профиля
 const handleProfileFormSubmit = (evt) => {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
-  closeFormProfile(closeButtonProfileForm, popupProfile);
-  closeOverlay();
-  clearInputProfile();
+  closePopup(popupProfile);
+  closePopup(overlay);
+  profileForm.reset();
 };
 popupForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Создаем карточку
 const createCard = (card) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
-  newCard.querySelector(".card__photo").src = card.link;
-  newCard.querySelector(".card__photo").alt = `Фотография ${card.name}`;
-  newCard.querySelector(".card__name").textContent = card.name;
+  const cardPhoto = newCard.querySelector(".card__photo");
+  const cardName = newCard.querySelector(".card__name");
+  cardPhoto.src = card.link;
+  cardPhoto.alt = `Фотография ${card.name}`;
+  cardName.textContent = card.name;
   newCard.onerror = function () {
     newCard.src = "./images/gallery/error.gif";
   };
@@ -102,18 +86,21 @@ const createCard = (card) => {
     //Лайк карточке
     if (targetElement.classList.contains("card__like-button")) {
       targetElement.classList.toggle("card__like-button_active");
+      return;
     }
 
     //Удаление карточки
     if (targetElement.classList.contains("card__trash-icon")) {
       newCard.remove();
+      return;
     }
 
     //Открытие попапа с фото
     if (targetElement.classList.contains("card__photo")) {
       popupPhotoName.textContent = targetElement.getAttribute("alt").slice(11);
       popupImage.src = targetElement.src;
-      openOverlay();
+      popupImage.alt = `Фотография ${targetElement.getAttribute("alt")}`;
+      // openOverlay();
       popupPhotoPopup.classList.add("popup__photo_opened");
     }
   });
@@ -123,7 +110,7 @@ const createCard = (card) => {
 //Закрытие попапа с фото
 const closePhotoPopup = () => {
   popupPhotoPopup.classList.remove("popup__photo_opened");
-  closeOverlay();
+  // closeOverlay();
 };
 closeButtonPopup.addEventListener("click", closePhotoPopup);
 
@@ -136,14 +123,8 @@ const renderCards = (cards, place) => {
 };
 renderCards(initialCards, galleryList);
 
-//Очищаем форму создания карточки
-const clearFormCard = () => {
-  nameCardFromPopup.value = "";
-  inputCardFromPopup.value = "";
-};
-
 //Добавление карточки на страницу из формы
-formCardPopup.addEventListener("submit", (evt) => {
+cardForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
   const newObjCard = {
     name: nameCardFromPopup.value,
@@ -151,7 +132,6 @@ formCardPopup.addEventListener("submit", (evt) => {
   };
 
   galleryList.prepend(createCard(newObjCard));
-  closeFormCard(closeButtonCardForm, formCardActive);
-  closeOverlay();
-  clearFormCard();
+  closePopup(popupCard);
+  cardForm.reset();
 });
