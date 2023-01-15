@@ -15,7 +15,6 @@ const profileName = document.querySelector(".profile__name");
 const profileProfession = document.querySelector(".profile__profession");
 const galleryList = document.querySelector(".gallery__list");
 const popupImage = document.querySelector(".popup__image");
-// const popupPhotoPopup = document.querySelector(".popup__photo");
 const popupPhotoName = document.querySelector(".popup__caption");
 const closeButtonProfileForm = document.querySelector(".close-profile-form");
 const closeButtonCardForm = document.querySelector(".close-card-form");
@@ -23,6 +22,30 @@ const closeButtonPopup = document.querySelector(".close-photo-popup");
 const popupProfile = document.querySelector(".popup-profile");
 const popupCard = document.querySelector(".popup-card");
 const popupPhoto = document.querySelector(".popup-photo");
+const popupsList = Array.from(document.querySelectorAll(".popup"));
+
+///Закрытие попапа по нажатию "Esc"
+const popupCloseEsc = (popupsList) => {
+  document.addEventListener("keydown", (evt) => {
+    if (evt.code === "Escape") {
+      popupsList.forEach((popup) => {
+        popup.classList.remove("popup_opened");
+      });
+    }
+  });
+};
+popupCloseEsc(popupsList);
+
+///Закрытие попапа "клик по оверлею"
+const popupCloseByClickOverlay = (popupsList) => {
+  popupsList.forEach((popup) => {
+    popup.addEventListener("click", (evt) => {
+      const targetElement = evt.target;
+      targetElement.classList.remove("popup_opened");
+    });
+  });
+};
+popupCloseByClickOverlay(popupsList);
 
 //Открытие и закрытие оверлея c попапами//
 const openPopup = (popup) => {
