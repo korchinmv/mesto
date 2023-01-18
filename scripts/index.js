@@ -22,34 +22,33 @@ const closeButtonPopup = document.querySelector(".close-photo-popup");
 const popupProfile = document.querySelector(".popup-profile");
 const popupCard = document.querySelector(".popup-card");
 const popupPhoto = document.querySelector(".popup-photo");
-const popupsList = Array.from(document.querySelectorAll(".popup"));
 
-///Закрытие попапа по нажатию "Esc"
-const popupCloseEsc = (popupsList) => {
-  document.addEventListener("keydown", (evt) => {
-    if (evt.code === "Escape") {
-      popupsList.forEach((popup) => {
-        popup.classList.remove("popup_opened");
-      });
-    }
-  });
-};
-popupCloseEsc(popupsList);
+//Закрытие попапа по нажатию "Esc"
+const closePopupByPressEsc = (evt) => {
+  const popupOpened = document.querySelector(".popup_opened");
 
-///Закрытие попапа "клик по оверлею"
-const popupCloseByClickOverlay = (popupsList) => {
-  popupsList.forEach((popup) => {
-    popup.addEventListener("click", (evt) => {
-      const targetElement = evt.target;
-      targetElement.classList.remove("popup_opened");
-    });
-  });
+  if (evt.key === "Escape") {
+    popupOpened.classList.remove("popup_opened");
+    document.removeEventListener("keydown", closePopupByPressEsc);
+  }
 };
-popupCloseByClickOverlay(popupsList);
+
+//Закрытие попапа "клик по оверлею"
+const closePopupByClickOnOverlay = (evt) => {
+  const popupOpened = document.querySelector(".popup_opened");
+  const targetElement = evt.target;
+
+  if (targetElement.classList.contains("popup_opened")) {
+    popupOpened.classList.remove("popup_opened");
+    document.removeEventListener("click", closePopupByClickOnOverlay);
+  }
+};
 
 //Открытие и закрытие оверлея c попапами//
 const openPopup = (popup) => {
   popup.classList.add("popup_opened");
+  document.addEventListener("keydown", closePopupByPressEsc);
+  document.addEventListener("click", closePopupByClickOnOverlay);
 };
 
 const closePopup = (popup) => {
@@ -129,7 +128,6 @@ const createCard = (card) => {
 };
 
 //Закрытие попапа с фото
-
 closeButtonPopup.addEventListener("click", () => {
   closePopup(popupPhoto);
 });
