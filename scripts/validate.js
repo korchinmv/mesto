@@ -48,7 +48,7 @@ const setEventListeners = (form) => {
   toggleButtonState(inputList, button);
 
   inputList.forEach((input) => {
-    input.addEventListener("input", function () {
+    input.addEventListener("input", () => {
       checkInputValidity(form, input);
       toggleButtonState(inputList, button);
     });
@@ -61,7 +61,6 @@ const enableValidation = () => {
   formList.forEach((form) => {
     form.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      setEventListeners(form);
 
       if (form.classList.contains("popup__form_profile")) {
         handleProfileFormSubmit();
@@ -71,6 +70,8 @@ const enableValidation = () => {
         handleCardFormSubmit();
       }
     });
+
+    setEventListeners(form);
   });
 };
 

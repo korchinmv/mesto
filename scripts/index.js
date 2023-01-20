@@ -1,7 +1,6 @@
 "use strict";
 
 import { initialCards } from "./cards.js";
-import { hideInputError } from "./validate.js";
 
 const cardForm = document.querySelector(".popup__form_card");
 const profileForm = document.querySelector(".popup__form_profile");
