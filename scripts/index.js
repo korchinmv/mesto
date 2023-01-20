@@ -1,6 +1,7 @@
 "use strict";
 
 import { initialCards } from "./cards.js";
+import { hideInputError } from "./validate.js";
 
 const cardForm = document.querySelector(".popup__form_card");
 const profileForm = document.querySelector(".popup__form_profile");
@@ -22,6 +23,27 @@ const closeButtonPopup = document.querySelector(".close-photo-popup");
 const popupProfile = document.querySelector(".popup-profile");
 const popupCard = document.querySelector(".popup-card");
 const popupPhoto = document.querySelector(".popup-photo");
+
+//Редактирование профиля
+export const handleProfileFormSubmit = () => {
+  profileName.textContent = nameInput.value;
+  profileProfession.textContent = jobInput.value;
+  closePopup(popupProfile);
+  closePopup(overlay);
+  profileForm.reset();
+};
+
+//Добавление карточки на страницу из формы
+export const handleCardFormSubmit = () => {
+  const newObjCard = {
+    name: nameCardFromPopup.value,
+    link: inputCardFromPopup.value,
+  };
+
+  galleryList.prepend(createCard(newObjCard));
+  closePopup(popupCard);
+  cardForm.reset();
+};
 
 //Закрытие попапа по нажатию "Esc"
 const closePopupByPressEsc = (evt) => {
@@ -77,17 +99,6 @@ closeButtonCardForm.addEventListener("click", () => {
   cardForm.reset();
 });
 
-//Редактирование профиля
-const handleProfileFormSubmit = (evt) => {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileProfession.textContent = jobInput.value;
-  closePopup(popupProfile);
-  closePopup(overlay);
-  profileForm.reset();
-};
-profileForm.addEventListener("submit", handleProfileFormSubmit);
-
 //Создаем карточку
 const createCard = (card) => {
   const templateCard = document.querySelector(".card-template").content;
@@ -140,16 +151,3 @@ const renderCards = (cards, place) => {
   });
 };
 renderCards(initialCards, galleryList);
-
-//Добавление карточки на страницу из формы
-cardForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const newObjCard = {
-    name: nameCardFromPopup.value,
-    link: inputCardFromPopup.value,
-  };
-
-  galleryList.prepend(createCard(newObjCard));
-  closePopup(popupCard);
-  cardForm.reset();
-});
