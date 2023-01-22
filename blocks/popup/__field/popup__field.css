@@ -1,9 +1,10 @@
 .popup__field {
 	display: block;
+	position: relative;
 }
 
 .popup__field:first-child {
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 }
 
 .popup__field:last-of-type {
