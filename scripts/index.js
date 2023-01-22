@@ -16,19 +16,29 @@ const profileProfession = document.querySelector(".profile__profession");
 const galleryList = document.querySelector(".gallery__list");
 const popupImage = document.querySelector(".popup__image");
 const popupPhotoName = document.querySelector(".popup__caption");
-const closeButtonProfileForm = document.querySelector(".close-profile-form");
-const closeButtonCardForm = document.querySelector(".close-card-form");
-const closeButtonPopup = document.querySelector(".close-photo-popup");
+const buttonClosePopupProfile = document.querySelector(".close-profile-form");
+const buttonCloseCardForm = document.querySelector(".close-card-form");
+const buttonClosePopup = document.querySelector(".close-photo-popup");
 const popupProfile = document.querySelector(".popup-profile");
 const popupCard = document.querySelector(".popup-card");
 const popupPhoto = document.querySelector(".popup-photo");
+
+//Заполнение формы данными из профиля
+const addNameAndJobInForm = (
+  profileName,
+  profileProfession,
+  nameInput,
+  jobInput
+) => {
+  nameInput.value = profileName.textContent;
+  jobInput.value = profileProfession.textContent;
+};
 
 //Редактирование профиля
 export const handleProfileFormSubmit = () => {
   profileName.textContent = nameInput.value;
   profileProfession.textContent = jobInput.value;
   closePopup(popupProfile);
-  closePopup(overlay);
   profileForm.reset();
 };
 
@@ -46,11 +56,9 @@ export const handleCardFormSubmit = () => {
 
 //Закрытие попапа по нажатию "Esc"
 const closePopupByPressEsc = (evt) => {
-  const popupOpened = document.querySelector(".popup_opened");
-
   if (evt.key === "Escape") {
-    popupOpened.classList.remove("popup_opened");
-    document.removeEventListener("keydown", closePopupByPressEsc);
+    const popupOpened = document.querySelector(".popup_opened");
+    closePopup(popupOpened);
   }
 };
 
@@ -60,8 +68,7 @@ const closePopupByClickOnOverlay = (evt) => {
   const targetElement = evt.target;
 
   if (targetElement.classList.contains("popup_opened")) {
-    popupOpened.classList.remove("popup_opened");
-    document.removeEventListener("click", closePopupByClickOnOverlay);
+    closePopup(popupOpened);
   }
 };
 
@@ -74,10 +81,13 @@ const openPopup = (popup) => {
 
 const closePopup = (popup) => {
   popup.classList.remove("popup_opened");
+  document.removeEventListener("click", closePopupByClickOnOverlay);
+  document.removeEventListener("keydown", closePopupByPressEsc);
 };
 
 //Открытие попапа профиля
 profileEditButton.addEventListener("click", () => {
+  addNameAndJobInForm(profileName, profileProfession, nameInput, jobInput);
   openPopup(popupProfile);
 });
 
@@ -87,13 +97,13 @@ cardOpenButton.addEventListener("click", () => {
 });
 
 //Закрытие попапа профиля
-closeButtonProfileForm.addEventListener("click", () => {
+buttonClosePopupProfile.addEventListener("click", () => {
   closePopup(popupProfile);
   profileForm.reset();
 });
 
 //Закрытие попапа добавления карточки
-closeButtonCardForm.addEventListener("click", () => {
+buttonCloseCardForm.addEventListener("click", () => {
   closePopup(popupCard);
   cardForm.reset();
 });
@@ -138,7 +148,7 @@ const createCard = (card) => {
 };
 
 //Закрытие попапа с фото
-closeButtonPopup.addEventListener("click", () => {
+buttonClosePopup.addEventListener("click", () => {
   closePopup(popupPhoto);
 });
 
