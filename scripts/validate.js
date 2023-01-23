@@ -1,8 +1,5 @@
 "use strict";
 
-import { handleProfileFormSubmit } from "./index.js";
-import { handleCardFormSubmit } from "./index.js";
-
 const formElements = {
   formProfile: "popup__form_profile",
   formCard: "popup__form_card",
@@ -87,18 +84,6 @@ const enableValidation = ({ formSelector, formProfile, formCard, ...rest }) => {
   const formList = Array.from(document.querySelectorAll(`${formSelector}`));
 
   formList.forEach((form) => {
-    form.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-
-      if (form.classList.contains(`${formProfile}`)) {
-        handleProfileFormSubmit();
-      }
-
-      if (form.classList.contains(`${formCard}`)) {
-        handleCardFormSubmit();
-      }
-    });
-
     setEventListeners(form, rest);
   });
 };

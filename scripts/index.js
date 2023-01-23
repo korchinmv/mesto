@@ -35,24 +35,33 @@ const addNameAndJobInForm = (
 };
 
 //Редактирование профиля
-export const handleProfileFormSubmit = () => {
-  profileName.textContent = nameInput.value;
-  profileProfession.textContent = jobInput.value;
-  closePopup(popupProfile);
-  profileForm.reset();
+const handleProfileFormSubmit = (profileForm) => {
+  profileForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
+    profileName.textContent = nameInput.value;
+    profileProfession.textContent = jobInput.value;
+    closePopup(popupProfile);
+    profileForm.reset();
+  });
 };
+handleProfileFormSubmit(profileForm);
 
 //Добавление карточки на страницу из формы
-export const handleCardFormSubmit = () => {
-  const newObjCard = {
-    name: nameCardFromPopup.value,
-    link: inputCardFromPopup.value,
-  };
+const handleCardFormSubmit = (cardForm) => {
+  cardForm.addEventListener("submit", (evt) => {
+    evt.preventDefault();
 
-  galleryList.prepend(createCard(newObjCard));
-  closePopup(popupCard);
-  cardForm.reset();
+    const newObjCard = {
+      name: nameCardFromPopup.value,
+      link: inputCardFromPopup.value,
+    };
+
+    galleryList.prepend(createCard(newObjCard));
+    closePopup(popupCard);
+    cardForm.reset();
+  });
 };
+handleCardFormSubmit(cardForm);
 
 //Закрытие попапа по нажатию "Esc"
 const closePopupByPressEsc = (evt) => {
