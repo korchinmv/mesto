@@ -1,6 +1,8 @@
 "use strict";
 
 import { initialCards } from "./cards.js";
+import { formElements } from "./validate.js";
+import { disabledButton } from "./validate.js";
 
 const cardForm = document.querySelector(".popup__form_card");
 const profileForm = document.querySelector(".popup__form_profile");
@@ -98,11 +100,13 @@ const closePopup = (popup) => {
 profileEditButton.addEventListener("click", () => {
   addNameAndJobInForm(profileName, profileProfession, nameInput, jobInput);
   openPopup(popupProfile);
+  disabledButton(formElements);
 });
 
 //Открытие попапа добавления карточки
 cardOpenButton.addEventListener("click", () => {
   openPopup(popupCard);
+  disabledButton(formElements);
 });
 
 //Закрытие попапа профиля
@@ -123,36 +127,33 @@ const createCard = (card) => {
   const newCard = templateCard.querySelector(".gallery__item").cloneNode(true);
   const cardPhoto = newCard.querySelector(".card__photo");
   const cardName = newCard.querySelector(".card__name");
+  const buttonLike = newCard.querySelector(".card__like-button");
+  const buttonTrashCard = newCard.querySelector(".card__trash-button");
+
+  cardName.textContent = card.name;
   cardPhoto.src = card.link;
   cardPhoto.alt = `Фотография ${card.name}`;
-  cardName.textContent = card.name;
-  newCard.onerror = function () {
-    newCard.src = "./images/gallery/error.gif";
+  cardPhoto.onerror = function () {
+    cardPhoto.src = "./images/gallery/error.gif";
   };
 
-  newCard.addEventListener("click", (evt) => {
+  buttonLike.addEventListener("click", (evt) => {
     const targetElement = evt.target;
-
-    //Лайк карточке
-    if (targetElement.classList.contains("card__like-button")) {
-      targetElement.classList.toggle("card__like-button_active");
-      return;
-    }
-
-    //Удаление карточки
-    if (targetElement.classList.contains("card__trash-button")) {
-      newCard.remove();
-      return;
-    }
-
-    //Открытие попапа с фото
-    if (targetElement.classList.contains("card__photo")) {
-      popupPhotoName.textContent = targetElement.getAttribute("alt").slice(11);
-      popupImage.src = targetElement.src;
-      popupImage.alt = `${targetElement.getAttribute("alt")}`;
-      openPopup(popupPhoto);
-    }
+    targetElement.classList.toggle("card__like-button_active");
   });
+
+  buttonTrashCard.addEventListener("click", (evt) => {
+    newCard.remove();
+  });
+
+  cardPhoto.addEventListener("click", (evt) => {
+    const targetElement = evt.target;
+    popupPhotoName.textContent = targetElement.getAttribute("alt").slice(11);
+    popupImage.src = targetElement.src;
+    popupImage.alt = `${targetElement.getAttribute("alt")}`;
+    openPopup(popupPhoto);
+  });
+
   return newCard;
 };
 
