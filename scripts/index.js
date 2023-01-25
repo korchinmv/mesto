@@ -37,16 +37,14 @@ const addNameAndJobInForm = (
 };
 
 //Редактирование профиля
-const handleProfileFormSubmit = (profileForm) => {
-  profileForm.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-    profileName.textContent = nameInput.value;
-    profileProfession.textContent = jobInput.value;
-    closePopup(popupProfile);
-    profileForm.reset();
-  });
+const handleProfileFormSubmit = (evt) => {
+  evt.preventDefault();
+  profileName.textContent = nameInput.value;
+  profileProfession.textContent = jobInput.value;
+  closePopup(popupProfile);
+  profileForm.reset();
 };
-handleProfileFormSubmit(profileForm);
+profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Добавление карточки на страницу из формы
 const handleCardFormSubmit = (cardForm) => {
@@ -142,15 +140,14 @@ const createCard = (card) => {
     targetElement.classList.toggle("card__like-button_active");
   });
 
-  buttonTrashCard.addEventListener("click", (evt) => {
+  buttonTrashCard.addEventListener("click", () => {
     newCard.remove();
   });
 
-  cardPhoto.addEventListener("click", (evt) => {
-    const targetElement = evt.target;
-    popupPhotoName.textContent = targetElement.getAttribute("alt").slice(11);
-    popupImage.src = targetElement.src;
-    popupImage.alt = `${targetElement.getAttribute("alt")}`;
+  cardPhoto.addEventListener("click", () => {
+    popupPhotoName.textContent = card.name;
+    popupImage.src = card.link;
+    popupImage.alt = `Фотография ${card.name}`;
     openPopup(popupPhoto);
   });
 
