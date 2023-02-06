@@ -1,10 +1,9 @@
 "use strict";
 import { openPopup } from "./index.js";
-export const galleryList = document.querySelector(".gallery__list");
-export const cardPhoto = document.querySelector(".card__photo");
-export const popupPhotoName = document.querySelector(".popup__caption");
-export const popupImage = document.querySelector(".popup__image");
 export const popupPhoto = document.querySelector(".popup-photo");
+const galleryList = document.querySelector(".gallery__list");
+const popupPhotoName = document.querySelector(".popup__caption");
+const popupImage = document.querySelector(".popup__image");
 
 export class Card {
   constructor(data, templateSelector) {

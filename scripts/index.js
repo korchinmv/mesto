@@ -5,7 +5,6 @@ import { disabledButton } from "./validate.js";
 import {
   addedCardsInGalleryFromDataCards,
   popupPhoto,
-  galleryList,
   createNewCard,
 } from "./Card.js";
 
