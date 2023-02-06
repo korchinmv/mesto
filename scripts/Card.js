@@ -1,7 +1,6 @@
 "use strict";
 import { openPopup } from "./index.js";
 export const galleryList = document.querySelector(".gallery__list");
-export const buttonLike = document.querySelector(".card__like-button");
 export const cardPhoto = document.querySelector(".card__photo");
 export const popupPhotoName = document.querySelector(".popup__caption");
 export const popupImage = document.querySelector(".popup__image");
@@ -25,8 +24,7 @@ export class Card {
 
   generateCard() {
     this._element = this._getTemplate();
-    this._element = this._setEventListeners();
-
+    this._setEventListeners();
     this._element.querySelector(".card__name").textContent = this._name;
     this._element.querySelector(".card__photo").src = this._link;
     this._element.querySelector(
@@ -36,13 +34,8 @@ export class Card {
     return this._element;
   }
 
-  _toggleLike() {
-    buttonLike.classList.toggle("card__like-button_active");
-  }
-
-  _setEventListeners() {
-    console.log(popupImage);
-    popupImage.addEventListener("click", this._openPopupImage());
+  _toggleLike(likeButton) {
+    likeButton.classList.toggle("card__like-button_active");
   }
 
   _openPopupImage() {
@@ -51,12 +44,38 @@ export class Card {
     popupImage.alt = `Фотография ${this._name}`;
     openPopup(popupPhoto);
   }
+
+  _setEventListeners() {
+    const likeButton = this._element.querySelector(".card__like-button");
+    const cardPhoto = this._element.querySelector(".card__photo");
+    const trashButton = this._element.querySelector(".card__trash-button");
+
+    cardPhoto.addEventListener("click", () => {
+      this._openPopupImage();
+    });
+
+    likeButton.addEventListener("click", () => {
+      this._toggleLike(likeButton);
+    });
+
+    trashButton.addEventListener("click", () => {
+      this._element.remove();
+    });
+  }
 }
 
-export const addedCardsInGallery = (initialCards) => {
-  initialCards.forEach((item) => {
-    const card = new Card(item, ".card-template");
-    const cardElement = card.generateCard();
+export const createNewCard = (item, position) => {
+  const card = new Card(item, ".card-template");
+  const cardElement = card.generateCard();
+  if (position === "append") {
     galleryList.append(cardElement);
+  } else {
+    galleryList.prepend(cardElement);
+  }
+};
+
+export const addedCardsInGalleryFromDataCards = (initialCards) => {
+  initialCards.forEach((item) => {
+    createNewCard(item, "append");
   });
 };
