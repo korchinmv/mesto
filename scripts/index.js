@@ -1,12 +1,8 @@
 "use strict";
 import { initialCards } from "./cards.js";
-import { formElements } from "./validate.js";
-import { disabledButton } from "./validate.js";
-import {
-  addedCardsInGalleryFromDataCards,
-  popupPhoto,
-  createNewCard,
-} from "./Card.js";
+// import { formElements } from "./validate.js";
+// import { disabledButton } from "./validate.js";
+import { popupPhoto, createNewCard } from "./Card.js";
 
 const cardForm = document.querySelector(".popup__form_card");
 const profileForm = document.querySelector(".popup__form_profile");
@@ -123,6 +119,3 @@ buttonCloseCardForm.addEventListener("click", () => {
 buttonClosePopup.addEventListener("click", () => {
   closePopup(popupPhoto);
 });
-
-//Вызыв функции добавления карточек в галлерею
-addedCardsInGalleryFromDataCards(initialCards);

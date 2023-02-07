@@ -2,8 +2,8 @@
 import { formElements } from "validate.js";
 
 class FormValidator {
-  construcor(formElements) {
-    this._formSelector = formElements.formSelector;
+  construcor(formElements, form) {
+    this._formSelector = form;
     this._inputSelector = formElements.inputSelector;
     this._submitButtonSelector = formElements.submitButtonSelector;
     this._inactiveButtonClass = formElements.inactiveButtonClass;
@@ -95,7 +95,7 @@ class FormValidator {
     const formList = Array.from(document.querySelectorAll(this._formSelector));
 
     formList.forEach((form) => {
-      form = new FormValidator(formElements);
+      form = new FormValidator(formElements, form);
 
       // this._setEventListeners();
       // this._disabledButton(formElements);
