@@ -5,7 +5,7 @@ const galleryList = document.querySelector(".gallery__list");
 const popupPhotoName = document.querySelector(".popup__caption");
 const popupImage = document.querySelector(".popup__image");
 
-export class Card {
+class Card {
   constructor(data, templateSelector) {
     this._name = data.name;
     this._link = data.link;
