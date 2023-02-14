@@ -1,12 +1,8 @@
 "use strict";
 import { openPopup } from "./index.js";
-import { initialCards } from "./cards.js";
-export const popupPhoto = document.querySelector(".popup-photo");
-const galleryList = document.querySelector(".gallery__list");
-const popupImage = document.querySelector(".popup__image");
-const popupPhotoName = document.querySelector(".popup__caption");
+import { popupPhotoName, popupImage, popupPhoto } from "./variables.js";
 
-class Card {
+export class Card {
   constructor(data, templateSelector) {
     this._name = data.name;
     this._link = data.link;
@@ -63,21 +59,3 @@ class Card {
     });
   }
 }
-
-export const createNewCard = (item, position) => {
-  const card = new Card(item, ".card-template");
-  const cardElement = card.generateCard();
-  if (position === "append") {
-    galleryList.append(cardElement);
-  } else {
-    galleryList.prepend(cardElement);
-  }
-};
-
-const addedCardsInGalleryFromDataCards = (initialCards) => {
-  initialCards.forEach((item) => {
-    createNewCard(item, "append");
-  });
-};
-
-addedCardsInGalleryFromDataCards(initialCards);

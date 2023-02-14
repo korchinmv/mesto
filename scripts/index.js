@@ -1,25 +1,52 @@
 "use strict";
-import { initialCards } from "./cards.js";
-// import { formElements } from "./validate.js";
-// import { disabledButton } from "./validate.js";
-import { popupPhoto, createNewCard } from "./Card.js";
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+import {
+  popupPhoto,
+  cardForm,
+  profileForm,
+  nameCardFromPopup,
+  inputCardFromPopup,
+  profileEditButton,
+  cardOpenButton,
+  nameInput,
+  jobInput,
+  profileName,
+  profileProfession,
+  buttonClosePopupProfile,
+  buttonCloseCardForm,
+  buttonClosePopup,
+  popupProfile,
+  popupCard,
+  initialCards,
+  galleryList,
+  formElements,
+} from "./variables.js";
 
-const cardForm = document.querySelector(".popup__form_card");
-const profileForm = document.querySelector(".popup__form_profile");
-const nameCardFromPopup = cardForm.querySelector(".popup__input_js_name-card");
-const inputCardFromPopup = cardForm.querySelector(".popup__input_js_link-card");
-const overlay = document.querySelector(".popup");
-const profileEditButton = document.querySelector(".profile__edit");
-const cardOpenButton = document.querySelector(".profile__add");
-const nameInput = overlay.querySelector(".popup__input_js_name");
-const jobInput = overlay.querySelector(".popup__input_js_profession");
-const profileName = document.querySelector(".profile__name");
-const profileProfession = document.querySelector(".profile__profession");
-const buttonClosePopupProfile = document.querySelector(".close-profile-form");
-const buttonCloseCardForm = document.querySelector(".close-card-form");
-const buttonClosePopup = document.querySelector(".close-photo-popup");
-const popupProfile = document.querySelector(".popup-profile");
-const popupCard = document.querySelector(".popup-card");
+//Создаем новую карточку на основе класса Card
+const createNewCard = (item, position) => {
+  const card = new Card(item, ".card-template");
+
+  const cardElement = card.generateCard();
+
+  if (position === "append") {
+    galleryList.append(cardElement);
+  } else {
+    galleryList.prepend(cardElement);
+  }
+};
+
+//Добавляем карточки на страницу
+const addedCardsInGalleryFromDataCards = (initialCards) => {
+  initialCards.forEach((item) => {
+    createNewCard(item, "append");
+  });
+};
+addedCardsInGalleryFromDataCards(initialCards);
+
+//Создаем экземпляры класса валидации для отдельной формы
+const cardFormValidate = new FormValidator(formElements, cardForm);
+const profileFormValidate = new FormValidator(formElements, profileForm);
 
 //Заполнение формы данными из профиля
 const addNameAndJobInForm = (
@@ -94,13 +121,13 @@ const closePopup = (popup) => {
 profileEditButton.addEventListener("click", () => {
   addNameAndJobInForm(profileName, profileProfession, nameInput, jobInput);
   openPopup(popupProfile);
-  disabledButton(formElements);
+  profileFormValidate.enableValidation();
 });
 
 //Открытие попапа добавления карточки
 cardOpenButton.addEventListener("click", () => {
   openPopup(popupCard);
-  disabledButton(formElements);
+  cardFormValidate.enableValidation();
 });
 
 //Закрытие попапа профиля
