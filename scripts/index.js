@@ -91,7 +91,7 @@ const handleCardFormSubmit = (cardForm) => {
     };
 
     createCard(newObjCard);
-    renderCard(newObjCard, "append");
+    renderCard(newObjCard, "");
     closePopup(popupCard);
     cardForm.reset();
     cardFormValidate.resetValidation();

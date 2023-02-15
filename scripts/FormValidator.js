@@ -74,7 +74,6 @@ export class FormValidator {
       this._hideInputError(input);
     });
     this._toggleButtonState();
-    console.log(123);
   }
 
   enableValidation() {
