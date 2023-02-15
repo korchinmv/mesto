@@ -36,6 +36,7 @@ export const formElements = {
   errorClass: "popup__input-error",
 };
 
+export const popups = Array.from(document.querySelectorAll(".popup"));
 export const popupPhoto = document.querySelector(".popup-photo");
 export const galleryList = document.querySelector(".gallery__list");
 export const popupPhotoName = document.querySelector(".popup__caption");

@@ -1,5 +1,5 @@
 "use strict";
-import { openPopup } from "./index.js";
+import { openPopup } from "./utils.js";
 import { popupPhotoName, popupImage, popupPhoto } from "./variables.js";
 
 export class Card {
@@ -20,18 +20,20 @@ export class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+    this._cardName = this._element.querySelector(".card__name");
+    this._cardPhoto = this._element.querySelector(".card__photo");
+    this._likeButton = this._element.querySelector(".card__like-button");
+    this._trashButton = this._element.querySelector(".card__trash-button");
+    this._cardName.textContent = this._name;
+    this._cardPhoto.src = this._link;
+    this._cardPhoto.alt = `Фотография ${this._name}`;
     this._setEventListeners();
-    this._element.querySelector(".card__name").textContent = this._name;
-    this._element.querySelector(".card__photo").src = this._link;
-    this._element.querySelector(
-      ".card__photo"
-    ).alt = `Фотография ${this._name}`;
 
     return this._element;
   }
 
-  _toggleLike(likeButton) {
-    likeButton.classList.toggle("card__like-button_active");
+  _toggleLike() {
+    this._likeButton.classList.toggle("card__like-button_active");
   }
 
   _openPopupImage() {
@@ -41,21 +43,22 @@ export class Card {
     openPopup(popupPhoto);
   }
 
-  _setEventListeners() {
-    const likeButton = this._element.querySelector(".card__like-button");
-    const cardPhoto = this._element.querySelector(".card__photo");
-    const trashButton = this._element.querySelector(".card__trash-button");
+  _deleteCard() {
+    this._element.remove();
+    this._element = null;
+  }
 
-    cardPhoto.addEventListener("click", () => {
+  _setEventListeners() {
+    this._cardPhoto.addEventListener("click", () => {
       this._openPopupImage();
     });
 
-    likeButton.addEventListener("click", () => {
-      this._toggleLike(likeButton);
+    this._likeButton.addEventListener("click", () => {
+      this._toggleLike();
     });
 
-    trashButton.addEventListener("click", () => {
-      this._element.remove();
+    this._trashButton.addEventListener("click", () => {
+      this._deleteCard();
     });
   }
 }

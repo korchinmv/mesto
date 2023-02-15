@@ -52,10 +52,8 @@ export class FormValidator {
 
   _toggleButtonState() {
     if (this._invalidInput()) {
-      console.log("invalid");
       this._addDisabledButton();
     } else {
-      console.log("valid");
       this._removeDisabledButton();
     }
   }
@@ -69,6 +67,14 @@ export class FormValidator {
         this._toggleButtonState();
       });
     });
+  }
+
+  resetValidation() {
+    this._inputList.forEach((input) => {
+      this._hideInputError(input);
+    });
+    this._toggleButtonState();
+    console.log(123);
   }
 
   enableValidation() {
