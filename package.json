@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Yandex practicum project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/korchinmv/mesto.git"
+  },
+  "author": "Korchin M <korchinmv@yandex.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/korchinmv/mesto/issues"
+  },
+  "homepage": "https://github.com/korchinmv/mesto#readme"
+}

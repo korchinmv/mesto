@@ -24,34 +24,22 @@ import {
   galleryList,
   formElements,
 } from "./variables.js";
+import { Section } from "./Section.js";
 
-//Создаем новую карточку на основе класса Card
-const createCard = (item) => {
-  const card = new Card(item, ".card-template");
-  const cardElement = card.generateCard();
+//Добавляем карточки из массива на страницу с помощью класса Section
+const cardListFromArray = new Section(
+  {
+    items: initialCards,
+    renderer: (cardItem) => {
+      const card = new Card(cardItem, ".card-template");
+      const cardElement = card.generateCard();
 
-  return cardElement;
-};
-
-//Добавляем карточку в html
-const renderCard = (item, position) => {
-  const cardElement = createCard(item);
-
-  if (position === "append") {
-    galleryList.append(cardElement);
-  } else {
-    galleryList.prepend(cardElement);
-  }
-};
-
-//Добавляем карточки на страницу
-const addedCardsInGalleryFromDataCards = (initialCards) => {
-  initialCards.forEach((item) => {
-    createCard(item);
-    renderCard(item, "append");
-  });
-};
-addedCardsInGalleryFromDataCards(initialCards);
+      cardListFromArray.setItem(cardElement);
+    },
+  },
+  galleryList
+);
+cardListFromArray.addItem();
 
 //Создаем экземпляры класса валидации для отдельной формы
 const cardFormValidate = new FormValidator(formElements, cardForm);
