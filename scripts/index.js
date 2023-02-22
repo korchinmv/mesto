@@ -9,13 +9,10 @@ import {
   profileForm,
   nameCardFromPopup,
   inputCardFromPopup,
-  profileEditButton,
-  cardOpenButton,
   nameInput,
   jobInput,
   profileName,
   profileProfession,
-  buttonClosePopupProfile,
   buttonCloseCardForm,
   buttonClosePopup,
   popupProfile,
@@ -25,13 +22,24 @@ import {
   formElements,
 } from "./variables.js";
 import { Section } from "./Section.js";
+import { Popup } from "./Popup.js";
+import { PopupWithImage } from "./PopupWithImage.js";
+
+const profilePopup = new Popup(popupProfile);
+profilePopup.setEventListeners();
+
+const photoPopup = new PopupWithImage(popupPhoto);
 
 //Добавляем карточки из массива на страницу с помощью класса Section
 const cardListFromArray = new Section(
   {
     items: initialCards,
     renderer: (cardItem) => {
-      const card = new Card(cardItem, ".card-template");
+      const card = new Card(cardItem, ".card-template", {
+        handleCardClick: (card) => {
+          photoPopup.open(card);
+        },
+      });
       const cardElement = card.generateCard();
 
       cardListFromArray.setItem(cardElement);
@@ -78,8 +86,8 @@ const handleCardFormSubmit = (cardForm) => {
       link: inputCardFromPopup.value,
     };
 
-    createCard(newObjCard);
-    renderCard(newObjCard, "");
+    // createCard(newObjCard);
+    // renderCard(newObjCard, "");
     closePopup(popupCard);
     cardForm.reset();
     cardFormValidate.resetValidation();
@@ -87,37 +95,28 @@ const handleCardFormSubmit = (cardForm) => {
 };
 handleCardFormSubmit(cardForm);
 
-//Открытие попапа профиля
-profileEditButton.addEventListener("click", () => {
-  addNameAndJobInForm(profileName, profileProfession, nameInput, jobInput);
-  openPopup(popupProfile);
-});
+// //Открытие попапа профиля
+// profileEditButton.addEventListener("click", () => {
+//   addNameAndJobInForm(profileName, profileProfession, nameInput, jobInput);
+//   openPopup(popupProfile);
+// });
 
-//Открытие попапа добавления карточки
-cardOpenButton.addEventListener("click", () => {
-  openPopup(popupCard);
-});
+// //Открытие попапа добавления карточки
+// cardOpenButton.addEventListener("click", () => {
+//   openPopup(popupCard);
+// });
 
-//Закрытие попапа профиля
-buttonClosePopupProfile.addEventListener("click", () => {
-  closePopup(popupProfile);
-  profileForm.reset();
-  profileFormValidate.resetValidation();
-});
+// //Закрытие попапа профиля
+// buttonClosePopupProfile.addEventListener("click", () => {
+//   closePopup(popupProfile);
+//   profileForm.reset();
+//   profileFormValidate.resetValidation();
+// });
 
-//Закрытие попапа "клик по оверлею"
-export const closePopupByClickOnOverlay = (evt) => {
-  const targetElement = evt.target;
-
-  if (targetElement.classList.contains("popup_opened")) {
-    closePopup(targetElement);
-  }
-};
-
-//Установка слушателя закрытия на попапы
-popups.forEach((popup) => {
-  popup.addEventListener("click", closePopupByClickOnOverlay);
-});
+// //Установка слушателя закрытия на попапы
+// popups.forEach((popup) => {
+//   popup.addEventListener("click", closePopupByClickOnOverlay);
+// });
 
 //Закрытие попапа добавления карточки
 buttonCloseCardForm.addEventListener("click", () => {
@@ -126,10 +125,10 @@ buttonCloseCardForm.addEventListener("click", () => {
   cardFormValidate.resetValidation();
 });
 
-//Закрытие попапа с фото
-buttonClosePopup.addEventListener("click", () => {
-  closePopup(popupPhoto);
-});
+// //Закрытие попапа с фото
+// buttonClosePopup.addEventListener("click", () => {
+//   closePopup(popupPhoto);
+// });
 
 //Закрытие попапа по нажатию "Esc"
 export const closePopupByPressEsc = (evt) => {

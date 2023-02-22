@@ -38,6 +38,7 @@ export const formElements = {
 
 export const popups = Array.from(document.querySelectorAll(".popup"));
 export const popupPhoto = document.querySelector(".popup-photo");
+export const popupCloseButton = document.querySelector(".popup__close ");
 export const galleryList = document.querySelector(".gallery__list");
 export const popupPhotoName = document.querySelector(".popup__caption");
 export const popupImage = document.querySelector(".popup__image");
@@ -49,12 +50,11 @@ export const nameCardFromPopup = cardForm.querySelector(
 export const inputCardFromPopup = cardForm.querySelector(
   ".popup__input_js_link-card"
 );
-export const profileEditButton = document.querySelector(".profile__edit");
-export const cardOpenButton = document.querySelector(".profile__add");
 export const nameInput = document.querySelector(".popup__input_js_name");
 export const jobInput = document.querySelector(".popup__input_js_profession");
 export const profileName = document.querySelector(".profile__name");
 export const profileProfession = document.querySelector(".profile__profession");
+export const profileEditButton = document.querySelector(".profile__edit");
 export const buttonClosePopupProfile = document.querySelector(
   ".close-profile-form"
 );
