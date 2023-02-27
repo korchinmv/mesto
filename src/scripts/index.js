@@ -21,9 +21,9 @@ import {
   formElements,
 } from "./variables.js";
 import { Section } from "./Section.js";
-import { Popup } from "./Popup.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { PopupWithForm } from "./PopupWithForm.js";
+import { UserInfo } from "./UserInfo.js";
 
 //Добавляем карточки из массива на страницу с помощью класса Section
 const cardListFromArray = new Section(
@@ -44,16 +44,21 @@ const cardListFromArray = new Section(
 );
 cardListFromArray.addItem();
 
+//Получает данные о пользователе
+const userInfo = new UserInfo(profileName, profileProfession);
+userInfo.getUserInfo();
+
 //Добавляем классы попапам редактирования профиля и добавления карточки
 const profilePopup = new PopupWithForm(popupProfile, {
-  handleProfileFormSubmit: (form) => {
-    profileName.textContent = nameInput.value;
-    profileProfession.textContent = jobInput.value;
-  },
+  formSubmit: () => {},
 });
+
 profilePopup.setEventListeners();
 
-const cardPopup = new PopupWithForm(popupCard);
+const cardPopup = new PopupWithForm(popupCard, {
+  formSubmit: () => {},
+});
+
 cardPopup.setEventListeners();
 
 //Добавляем класс попапу с картинкой

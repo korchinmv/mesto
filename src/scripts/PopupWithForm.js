@@ -5,9 +5,13 @@ export class PopupWithForm extends Popup {
     super(popup);
     this._submitForm = submitForm;
     this._form = popup.querySelector(".popup__form");
+    this._input = this._form.querySelector(".popup__input");
   }
 
-  _getInputValues() {}
+  _getInputValues() {
+    this._input.textContent = nameInput.value;
+    profileProfession.textContent = jobInput.value;
+  }
 
   close() {
     super.close();
@@ -16,11 +20,11 @@ export class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
+    console.log(this._form);
 
-    this._popupSelector.addEventListener("submit", (evt) => {
-      evt.preventDefault(this._form);
-      console.log(this._submitForm);
-      this.close();
+    this._form.addEventListener("submit", (evt) => {
+      evt.perventDefault();
+      this._submitForm();
     });
   }
 }
