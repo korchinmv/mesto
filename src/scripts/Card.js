@@ -1,5 +1,4 @@
 "use strict";
-import { openPopup } from "./utils.js";
 
 export class Card {
   constructor(data, templateSelector, { handleCardClick }) {

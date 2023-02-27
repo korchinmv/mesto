@@ -1,10 +1,9 @@
 "use strict";
+import "../pages/index.css";
 import { Card } from "./Card.js";
-import { openPopup, closePopup } from "./utils.js";
 import { FormValidator } from "./FormValidator.js";
 import {
   popupPhoto,
-  popups,
   cardForm,
   profileForm,
   nameCardFromPopup,
@@ -13,8 +12,8 @@ import {
   jobInput,
   profileName,
   profileProfession,
-  buttonCloseCardForm,
-  buttonClosePopup,
+  profileEditButton,
+  cardAddButton,
   popupProfile,
   popupCard,
   initialCards,
@@ -24,11 +23,7 @@ import {
 import { Section } from "./Section.js";
 import { Popup } from "./Popup.js";
 import { PopupWithImage } from "./PopupWithImage.js";
-
-const profilePopup = new Popup(popupProfile);
-profilePopup.setEventListeners();
-
-const photoPopup = new PopupWithImage(popupPhoto);
+import { PopupWithForm } from "./PopupWithForm.js";
 
 //Добавляем карточки из массива на страницу с помощью класса Section
 const cardListFromArray = new Section(
@@ -49,6 +44,22 @@ const cardListFromArray = new Section(
 );
 cardListFromArray.addItem();
 
+//Добавляем классы попапам редактирования профиля и добавления карточки
+const profilePopup = new PopupWithForm(popupProfile, {
+  handleProfileFormSubmit: (form) => {
+    profileName.textContent = nameInput.value;
+    profileProfession.textContent = jobInput.value;
+  },
+});
+profilePopup.setEventListeners();
+
+const cardPopup = new PopupWithForm(popupCard);
+cardPopup.setEventListeners();
+
+//Добавляем класс попапу с картинкой
+const photoPopup = new PopupWithImage(popupPhoto);
+photoPopup.setEventListeners();
+
 //Создаем экземпляры класса валидации для отдельной формы
 const cardFormValidate = new FormValidator(formElements, cardForm);
 const profileFormValidate = new FormValidator(formElements, profileForm);
@@ -67,14 +78,6 @@ const addNameAndJobInForm = (
 };
 
 //Редактирование профиля
-const handleProfileFormSubmit = (evt) => {
-  evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileProfession.textContent = jobInput.value;
-  closePopup(popupProfile);
-  profileForm.reset();
-};
-profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 //Добавление карточки на страницу из формы
 const handleCardFormSubmit = (cardForm) => {
@@ -86,54 +89,18 @@ const handleCardFormSubmit = (cardForm) => {
       link: inputCardFromPopup.value,
     };
 
-    // createCard(newObjCard);
-    // renderCard(newObjCard, "");
-    closePopup(popupCard);
     cardForm.reset();
     cardFormValidate.resetValidation();
   });
 };
 handleCardFormSubmit(cardForm);
 
-// //Открытие попапа профиля
-// profileEditButton.addEventListener("click", () => {
-//   addNameAndJobInForm(profileName, profileProfession, nameInput, jobInput);
-//   openPopup(popupProfile);
-// });
-
-// //Открытие попапа добавления карточки
-// cardOpenButton.addEventListener("click", () => {
-//   openPopup(popupCard);
-// });
-
-// //Закрытие попапа профиля
-// buttonClosePopupProfile.addEventListener("click", () => {
-//   closePopup(popupProfile);
-//   profileForm.reset();
-//   profileFormValidate.resetValidation();
-// });
-
-// //Установка слушателя закрытия на попапы
-// popups.forEach((popup) => {
-//   popup.addEventListener("click", closePopupByClickOnOverlay);
-// });
-
-//Закрытие попапа добавления карточки
-buttonCloseCardForm.addEventListener("click", () => {
-  closePopup(popupCard);
-  cardForm.reset();
-  cardFormValidate.resetValidation();
+//Открытие попапа профиля
+profileEditButton.addEventListener("click", () => {
+  profilePopup.open();
 });
 
-// //Закрытие попапа с фото
-// buttonClosePopup.addEventListener("click", () => {
-//   closePopup(popupPhoto);
-// });
-
-//Закрытие попапа по нажатию "Esc"
-export const closePopupByPressEsc = (evt) => {
-  if (evt.key === "Escape") {
-    const popupOpened = document.querySelector(".popup_opened");
-    closePopup(popupOpened);
-  }
-};
+//Открытие попапа добавления карточки
+cardAddButton.addEventListener("click", () => {
+  cardPopup.open();
+});

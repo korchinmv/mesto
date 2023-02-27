@@ -1,10 +1,9 @@
 "use strict";
 
-import { profileEditButton, popupCloseButton } from "./variables.js";
-
 export class Popup {
   constructor(popup) {
     this._popupSelector = popup;
+    this._buttonClose = popup.querySelector(".popup__close");
   }
 
   _handleEscClose(evt) {
@@ -19,15 +18,10 @@ export class Popup {
 
   close() {
     this._popupSelector.classList.remove("popup_opened");
-    console.log("hihi");
   }
 
   setEventListeners() {
-    profileEditButton.addEventListener("click", () => {
-      this.open();
-    });
-
-    popupCloseButton.addEventListener("click", () => {
+    this._buttonClose.addEventListener("click", () => {
       this.close();
     });
 

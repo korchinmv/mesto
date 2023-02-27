@@ -1,7 +1,7 @@
 "use strict";
 
 import { Popup } from "./Popup.js";
-import { popupPhotoName, popupImage, popupPhoto } from "./variables.js";
+import { popupPhotoName, popupImage } from "./variables.js";
 
 export class PopupWithImage extends Popup {
   constructor(popup) {
@@ -13,6 +13,5 @@ export class PopupWithImage extends Popup {
     popupImage.src = card.src;
     popupImage.alt = card.alt;
     super.open();
-    console.log(card);
   }
 }
