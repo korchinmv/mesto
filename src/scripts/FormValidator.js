@@ -1,4 +1,5 @@
 "use strict";
+
 export class FormValidator {
   constructor(formElements, form) {
     this._formElements = formElements;

@@ -1,3 +1,5 @@
+"use strict";
+
 export class Section {
   constructor({ items, renderer }, container) {
     this._items = items;
@@ -12,6 +14,7 @@ export class Section {
   }
 
   setItem(element) {
+    console.log(element);
     this._container.append(element);
   }
 }

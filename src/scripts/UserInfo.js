@@ -1,16 +1,22 @@
+"use strict";
+
 export class UserInfo {
-  constructor(nameUser, aboutUser) {
-    this._name = nameUser;
-    this._aboutUser = aboutUser;
+  constructor({ name, job }) {
+    this._name = name;
+    this._job = job;
   }
 
   getUserInfo() {
-    let userInfo = {};
+    const userInfo = {
+      username: this._name.textContent,
+      job: this._job.textContent,
+    };
 
-    userInfo.nameUser = this._name.textContent;
-    userInfo.aboutUser = this._aboutUser.textContent;
     return userInfo;
   }
 
-  setUserInfo() {}
+  setUserInfo(dataForm) {
+    this._name.textContent = dataForm.name;
+    this._job.textContent = dataForm.job;
+  }
 }

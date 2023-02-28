@@ -1,16 +1,23 @@
+"use strict";
+
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor(popup, submitForm) {
+  constructor(popup, { handleFormSubmit }) {
     super(popup);
-    this._submitForm = submitForm;
+    this._handleFormSubmit = handleFormSubmit;
     this._form = popup.querySelector(".popup__form");
-    this._input = this._form.querySelector(".popup__input");
+    this._inputList = this._form.querySelectorAll(".popup__input");
   }
 
   _getInputValues() {
-    this._input.textContent = nameInput.value;
-    profileProfession.textContent = jobInput.value;
+    this._formValues = {};
+
+    this._inputList.forEach((input) => {
+      this._formValues[input.name] = input.value;
+    });
+    console.log(this._formValues);
+    return this._formValues;
   }
 
   close() {
@@ -20,11 +27,10 @@ export class PopupWithForm extends Popup {
 
   setEventListeners() {
     super.setEventListeners();
-    console.log(this._form);
 
     this._form.addEventListener("submit", (evt) => {
-      evt.perventDefault();
-      this._submitForm();
+      evt.preventDefault();
+      this._handleFormSubmit(this._getInputValues());
     });
   }
 }

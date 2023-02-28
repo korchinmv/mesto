@@ -1,4 +1,5 @@
 "use strict";
+
 import "../pages/index.css";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
@@ -6,10 +7,8 @@ import {
   popupPhoto,
   cardForm,
   profileForm,
-  nameCardFromPopup,
-  inputCardFromPopup,
-  nameInput,
   jobInput,
+  nameInput,
   profileName,
   profileProfession,
   profileEditButton,
@@ -42,21 +41,32 @@ const cardListFromArray = new Section(
   },
   galleryList
 );
+
 cardListFromArray.addItem();
 
-//Получает данные о пользователе
-const userInfo = new UserInfo(profileName, profileProfession);
-userInfo.getUserInfo();
+// Получает данные о пользователе
+const userInfo = new UserInfo({ name: profileName, job: profileProfession });
 
 //Добавляем классы попапам редактирования профиля и добавления карточки
 const profilePopup = new PopupWithForm(popupProfile, {
-  formSubmit: () => {},
+  handleFormSubmit: (dataForm) => {
+    userInfo.setUserInfo(dataForm);
+    profilePopup.close();
+  },
 });
 
 profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(popupCard, {
-  formSubmit: () => {},
+  handleFormSubmit: (dataForm) => {
+    const newCard = new Card(dataForm, ".card-template", {
+      handleCardClick: (card) => {
+        photoPopup.open(card);
+      },
+    });
+    cardListFromArray.setItem(newCard);
+    profilePopup.close();
+  },
 });
 
 cardPopup.setEventListeners();
@@ -71,37 +81,14 @@ const profileFormValidate = new FormValidator(formElements, profileForm);
 profileFormValidate.enableValidation();
 cardFormValidate.enableValidation();
 
-//Заполнение формы данными из профиля
-const addNameAndJobInForm = (
-  profileName,
-  profileProfession,
-  nameInput,
-  jobInput
-) => {
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileProfession.textContent;
-};
-
-//Редактирование профиля
-
-//Добавление карточки на страницу из формы
-const handleCardFormSubmit = (cardForm) => {
-  cardForm.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-
-    const newObjCard = {
-      name: nameCardFromPopup.value,
-      link: inputCardFromPopup.value,
-    };
-
-    cardForm.reset();
-    cardFormValidate.resetValidation();
-  });
-};
-handleCardFormSubmit(cardForm);
-
 //Открытие попапа профиля
 profileEditButton.addEventListener("click", () => {
+  const infoAboutUser = userInfo.getUserInfo();
+
+  //Добавляем имя и профессию в инпуты формы
+  nameInput.value = infoAboutUser.username;
+  jobInput.value = infoAboutUser.job;
+
   profilePopup.open();
 });
 
