@@ -34,6 +34,7 @@ const cardListFromArray = new Section(
           photoPopup.open(card);
         },
       });
+
       const cardElement = card.generateCard();
 
       cardListFromArray.setItem(cardElement);
@@ -44,7 +45,7 @@ const cardListFromArray = new Section(
 
 cardListFromArray.addItem();
 
-// Получает данные о пользователе
+// Получаем данные о пользователе
 const userInfo = new UserInfo({ name: profileName, job: profileProfession });
 
 //Добавляем классы попапам редактирования профиля и добавления карточки
@@ -59,13 +60,18 @@ profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(popupCard, {
   handleFormSubmit: (dataForm) => {
-    const newCard = new Card(dataForm, ".card-template", {
+    //Создаем новый экземпляр карточки из попапа
+    const card = new Card(dataForm, ".card-template", {
       handleCardClick: (card) => {
         photoPopup.open(card);
       },
     });
-    cardListFromArray.setItem(newCard);
-    profilePopup.close();
+    const cardElement = card.generateCard();
+
+    //Добавляем на страницу
+    cardListFromArray.setItem(cardElement);
+
+    cardPopup.close();
   },
 });
 

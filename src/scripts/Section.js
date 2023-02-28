@@ -14,7 +14,6 @@ export class Section {
   }
 
   setItem(element) {
-    console.log(element);
-    this._container.append(element);
+    this._container.prepend(element);
   }
 }
