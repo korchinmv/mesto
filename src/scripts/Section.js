@@ -1,10 +1,10 @@
 "use strict";
 
 export class Section {
-  constructor({ items, renderer }, container) {
+  constructor({ items, renderer }, containerSelector) {
     this._items = items;
     this._renderer = renderer;
-    this._container = container;
+    this._container = document.querySelector(containerSelector);
   }
 
   addItem() {

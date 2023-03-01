@@ -4,19 +4,13 @@ import "../pages/index.css";
 import { Card } from "./Card.js";
 import { FormValidator } from "./FormValidator.js";
 import {
-  popupPhoto,
   cardForm,
   profileForm,
   jobInput,
   nameInput,
-  profileName,
-  profileProfession,
   profileEditButton,
   cardAddButton,
-  popupProfile,
-  popupCard,
   initialCards,
-  galleryList,
   formElements,
 } from "./variables.js";
 import { Section } from "./Section.js";
@@ -25,31 +19,34 @@ import { PopupWithForm } from "./PopupWithForm.js";
 import { UserInfo } from "./UserInfo.js";
 
 //Добавляем карточки из массива на страницу с помощью класса Section
-const cardListFromArray = new Section(
+const addCardToPage = new Section(
   {
     items: initialCards,
     renderer: (cardItem) => {
       const card = new Card(cardItem, ".card-template", {
-        handleCardClick: (card) => {
-          photoPopup.open(card);
+        handleCardClick: (cardName, link) => {
+          photoPopup.open(cardName, link);
         },
       });
 
       const cardElement = card.generateCard();
 
-      cardListFromArray.setItem(cardElement);
+      addCardToPage.setItem(cardElement);
     },
   },
-  galleryList
+  ".gallery__list"
 );
 
-cardListFromArray.addItem();
+addCardToPage.addItem();
 
 // Получаем данные о пользователе
-const userInfo = new UserInfo({ name: profileName, job: profileProfession });
+const userInfo = new UserInfo({
+  name: ".profile__name",
+  job: ".profile__profession",
+});
 
 //Добавляем классы попапам редактирования профиля и добавления карточки
-const profilePopup = new PopupWithForm(popupProfile, {
+const profilePopup = new PopupWithForm(".popup-profile", {
   handleFormSubmit: (dataForm) => {
     userInfo.setUserInfo(dataForm);
     profilePopup.close();
@@ -58,7 +55,7 @@ const profilePopup = new PopupWithForm(popupProfile, {
 
 profilePopup.setEventListeners();
 
-const cardPopup = new PopupWithForm(popupCard, {
+const cardPopup = new PopupWithForm(".popup-card", {
   handleFormSubmit: (dataForm) => {
     //Создаем новый экземпляр карточки из попапа
     const card = new Card(dataForm, ".card-template", {
@@ -69,7 +66,7 @@ const cardPopup = new PopupWithForm(popupCard, {
     const cardElement = card.generateCard();
 
     //Добавляем на страницу
-    cardListFromArray.setItem(cardElement);
+    addCardToPage.setItem(cardElement);
 
     cardPopup.close();
   },
@@ -78,7 +75,7 @@ const cardPopup = new PopupWithForm(popupCard, {
 cardPopup.setEventListeners();
 
 //Добавляем класс попапу с картинкой
-const photoPopup = new PopupWithImage(popupPhoto);
+const photoPopup = new PopupWithImage(".popup-photo");
 photoPopup.setEventListeners();
 
 //Создаем экземпляры класса валидации для отдельной формы

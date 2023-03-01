@@ -1,17 +1,19 @@
 "use strict";
 
 import { Popup } from "./Popup.js";
-import { popupPhotoName, popupImage } from "./variables.js";
 
 export class PopupWithImage extends Popup {
-  constructor(popup) {
-    super(popup);
+  constructor(selector) {
+    super(selector);
+
+    this._popupPhotoName = this._popup.querySelector(".popup__caption");
+    this._popupImage = this._popup.querySelector(".popup__image");
   }
 
-  open(card) {
-    popupPhotoName.textContent = card.alt.slice(11);
-    popupImage.src = card.src;
-    popupImage.alt = card.alt;
+  open(cardName, link) {
+    this._popupPhotoName.textContent = cardName.textContent;
+    this._popupImage.src = link;
+    this._popupImage.alt = `Фотография ${cardName.textContent}`;
     super.open();
   }
 }
