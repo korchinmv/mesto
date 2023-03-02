@@ -50,7 +50,6 @@ export const nameInput = document.querySelector(".popup__input_js_name");
 export const jobInput = document.querySelector(".popup__input_js_profession");
 export const profileEditButton = document.querySelector(".profile__edit");
 export const cardAddButton = document.querySelector(".profile__add");
-
 export const buttonClosePopupProfile = document.querySelector(
   ".close-profile-form"
 );

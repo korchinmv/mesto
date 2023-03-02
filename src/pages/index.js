@@ -1,8 +1,8 @@
 "use strict";
 
 import "../pages/index.css";
-import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
 import {
   cardForm,
   profileForm,
@@ -12,26 +12,30 @@ import {
   cardAddButton,
   initialCards,
   formElements,
-} from "./variables.js";
-import { Section } from "./Section.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { UserInfo } from "./UserInfo.js";
+} from "../utils/variables.js";
+import { Section } from "../components/Section.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
+
+//Функция создания карточки
+const createCard = (cardItem) => {
+  const card = new Card(cardItem, ".card-template", {
+    handleCardClick: (cardName, link) => {
+      photoPopup.open(cardName, link);
+    },
+  });
+
+  const cardElement = card.generateCard();
+  return cardElement;
+};
 
 //Добавляем карточки из массива на страницу с помощью класса Section
 const addCardToPage = new Section(
   {
     items: initialCards,
     renderer: (cardItem) => {
-      const card = new Card(cardItem, ".card-template", {
-        handleCardClick: (cardName, link) => {
-          photoPopup.open(cardName, link);
-        },
-      });
-
-      const cardElement = card.generateCard();
-
-      addCardToPage.setItem(cardElement);
+      addCardToPage.setItem(createCard(cardItem));
     },
   },
   ".gallery__list"
@@ -49,6 +53,7 @@ const userInfo = new UserInfo({
 const profilePopup = new PopupWithForm(".popup-profile", {
   handleFormSubmit: (dataForm) => {
     userInfo.setUserInfo(dataForm);
+
     profilePopup.close();
   },
 });
@@ -57,17 +62,7 @@ profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(".popup-card", {
   handleFormSubmit: (dataForm) => {
-    //Создаем новый экземпляр карточки из попапа
-    const card = new Card(dataForm, ".card-template", {
-      handleCardClick: (card) => {
-        photoPopup.open(card);
-      },
-    });
-    const cardElement = card.generateCard();
-
-    //Добавляем на страницу
-    addCardToPage.setItem(cardElement);
-
+    addCardToPage.setItem(createCard(dataForm));
     cardPopup.close();
   },
 });
