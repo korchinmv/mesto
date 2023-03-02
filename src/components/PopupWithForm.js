@@ -25,6 +25,7 @@ export class PopupWithForm extends Popup {
     super.close();
     this._form.reset();
     this._submitButton.classList.add("popup__save_disabled");
+    this._submitButton.disabled = true;
   }
 
   setEventListeners() {
