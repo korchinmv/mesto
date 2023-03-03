@@ -70,8 +70,8 @@ export class FormValidator {
     });
   }
 
-  resetValidation() {
-    this._inputList.forEach((input) => {
+  resetValidation(formInputs) {
+    formInputs.forEach((input) => {
       this._hideInputError(input);
     });
     this._toggleButtonState();

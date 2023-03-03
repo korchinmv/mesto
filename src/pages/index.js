@@ -31,17 +31,17 @@ const createCard = (cardItem) => {
 };
 
 //Добавляем карточки из массива на страницу с помощью класса Section
-const addCardToPage = new Section(
+const cardElementAddToPage = new Section(
   {
     items: initialCards,
     renderer: (cardItem) => {
-      addCardToPage.setItem(createCard(cardItem));
+      cardElementAddToPage.setItem(createCard(cardItem));
     },
   },
   ".gallery__list"
 );
 
-addCardToPage.addItem();
+cardElementAddToPage.addItem();
 
 // Получаем данные о пользователе
 const userInfo = new UserInfo({
@@ -62,8 +62,12 @@ profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(".popup-card", {
   handleFormSubmit: (dataForm) => {
-    addCardToPage.setItem(createCard(dataForm));
+    cardElementAddToPage.setItem(createCard(dataForm));
     cardPopup.close();
+  },
+
+  resetValidation: (inputList) => {
+    cardFormValidate.resetValidation(inputList);
   },
 });
 
@@ -76,6 +80,7 @@ photoPopup.setEventListeners();
 //Создаем экземпляры класса валидации для отдельной формы
 const cardFormValidate = new FormValidator(formElements, cardForm);
 const profileFormValidate = new FormValidator(formElements, profileForm);
+
 profileFormValidate.enableValidation();
 cardFormValidate.enableValidation();
 
