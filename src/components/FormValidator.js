@@ -70,10 +70,11 @@ export class FormValidator {
     });
   }
 
-  resetValidation(formInputs) {
-    formInputs.forEach((input) => {
+  resetValidation() {
+    this._inputList.forEach((input) => {
       this._hideInputError(input);
     });
+
     this._toggleButtonState();
   }
 

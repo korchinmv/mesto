@@ -65,10 +65,6 @@ const cardPopup = new PopupWithForm(".popup-card", {
     cardElementAddToPage.setItem(createCard(dataForm));
     cardPopup.close();
   },
-
-  resetValidation: (inputList) => {
-    cardFormValidate.resetValidation(inputList);
-  },
 });
 
 cardPopup.setEventListeners();
@@ -92,10 +88,12 @@ profileEditButton.addEventListener("click", () => {
   nameInput.value = infoAboutUser.username;
   jobInput.value = infoAboutUser.job;
 
+  cardFormValidate.resetValidation();
   profilePopup.open();
 });
 
 //Открытие попапа добавления карточки
 cardAddButton.addEventListener("click", () => {
+  cardFormValidate.resetValidation();
   cardPopup.open();
 });

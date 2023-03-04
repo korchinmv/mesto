@@ -3,13 +3,12 @@
 import { Popup } from "./Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor(selector, { handleFormSubmit, resetValidation }) {
+  constructor(selector, { handleFormSubmit }) {
     super(selector);
     this._handleFormSubmit = handleFormSubmit;
     this._form = this._popup.querySelector(".popup__form");
     this._inputList = this._form.querySelectorAll(".popup__input");
     this._submitButton = this._form.querySelector(".popup__save");
-    this._resetValidation = resetValidation;
   }
 
   _getInputValues() {
@@ -25,7 +24,6 @@ export class PopupWithForm extends Popup {
   close() {
     super.close();
     this._form.reset();
-    this._resetValidation(this._inputList);
   }
 
   setEventListeners() {
