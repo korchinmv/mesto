@@ -37,5 +37,16 @@ export class Api {
     return promise.then(this._getJson);
   }
 
-  editProfile() {}
+  sendProfile(name, job) {
+    const promise = fetch(`${this._URL}users/me`, {
+      method: "PATCH",
+      headers: this._getHeaders(),
+      body: JSON.stringify({
+        name: name,
+        about: job,
+      }),
+    });
+
+    return promise.then(this._getJson);
+  }
 }

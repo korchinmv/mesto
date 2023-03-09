@@ -6,16 +6,12 @@ import { FormValidator } from "../components/FormValidator.js";
 import {
   TOKEN,
   URL,
-  profileName,
-  profileProfession,
-  profileAvatar,
   cardForm,
   profileForm,
   jobInput,
   nameInput,
   profileEditButton,
   cardAddButton,
-  initialCards,
   formElements,
 } from "../utils/variables.js";
 import { Api } from "../components/Api";
@@ -24,12 +20,12 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 
-//Функция добавления данных в профиль
-const addDataUserInProfile = (name, proffesion, avatar, data) => {
-  name.textContent = data.name;
-  proffesion.textContent = data.about;
-  avatar.src = data.avatar;
-};
+// Получаем данные о пользователе
+const userInfo = new UserInfo({
+  name: ".profile__name",
+  job: ".profile__profession",
+  avatar: ".profile__avatar",
+});
 
 //Загрузка информации о пользователе с серверa
 const api = new Api(URL, TOKEN);
@@ -37,7 +33,8 @@ const api = new Api(URL, TOKEN);
 api
   .getUser()
   .then((data) => {
-    addDataUserInProfile(profileName, profileProfession, profileAvatar, data);
+    // addDataUserInProfile(profileName, profileProfession, profileAvatar, data);
+    userInfo.setUserInfo(data);
   })
   .catch((err) => {
     console.log(err);
@@ -47,7 +44,6 @@ api
 api
   .getCards()
   .then((data) => {
-    console.log(data[0]);
     const cardElementAddToPage = new Section(
       {
         items: data,
@@ -76,18 +72,17 @@ const createCard = (cardItem) => {
   return cardElement;
 };
 
-//Добавляем карточки из массива на страницу с помощью класса Section
-
-// Получаем данные о пользователе
-const userInfo = new UserInfo({
-  name: ".profile__name",
-  job: ".profile__profession",
-});
-
 //Добавляем классы попапам редактирования профиля и добавления карточки
 const profilePopup = new PopupWithForm(".popup-profile", {
   handleFormSubmit: (dataForm) => {
-    userInfo.setUserInfo(dataForm);
+    api
+      .sendProfile(dataForm.name, dataForm.job)
+      .then((data) => {
+        userInfo.setUserInfo(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     profilePopup.close();
   },

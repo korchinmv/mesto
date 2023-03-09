@@ -1,9 +1,10 @@
 "use strict";
 
 export class UserInfo {
-  constructor({ name, job }) {
+  constructor({ name, job, avatar }) {
     this._name = document.querySelector(name);
     this._job = document.querySelector(job);
+    this._avatar = document.querySelector(avatar);
   }
 
   getUserInfo() {
@@ -17,6 +18,7 @@ export class UserInfo {
 
   setUserInfo(dataForm) {
     this._name.textContent = dataForm.name;
-    this._job.textContent = dataForm.job;
+    this._job.textContent = dataForm.about;
+    this._avatar.src = dataForm.avatar;
   }
 }

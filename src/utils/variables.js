@@ -1,32 +1,5 @@
 "use strict";
 
-export const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
 export const formElements = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -39,9 +12,6 @@ export const formElements = {
 export const TOKEN = "5fed34a4-12fb-4e00-a0af-c237a59bdc22";
 export const URL = "https://mesto.nomoreparties.co/v1/cohort-61/";
 
-export const profileName = document.querySelector(".profile__name");
-export const profileProfession = document.querySelector(".profile__profession");
-export const profileAvatar = document.querySelector(".profile__avatar");
 export const popups = Array.from(document.querySelectorAll(".popup"));
 export const popupCloseButton = document.querySelector(".popup__close ");
 export const cardForm = document.querySelector(".popup__form_card");
