@@ -4,6 +4,11 @@ import "../pages/index.css";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import {
+  TOKEN,
+  URL,
+  profileName,
+  profileProfession,
+  profileAvatar,
   cardForm,
   profileForm,
   jobInput,
@@ -13,10 +18,51 @@ import {
   initialCards,
   formElements,
 } from "../utils/variables.js";
+import { Api } from "../components/Api";
 import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
+
+//Функция добавления данных в профиль
+const addDataUserInProfile = (name, proffesion, avatar, data) => {
+  name.textContent = data.name;
+  proffesion.textContent = data.about;
+  avatar.src = data.avatar;
+};
+
+//Загрузка информации о пользователе с серверa
+const api = new Api(URL, TOKEN);
+
+api
+  .getUser()
+  .then((data) => {
+    addDataUserInProfile(profileName, profileProfession, profileAvatar, data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+//Загрузка карточек с сервера
+api
+  .getCards()
+  .then((data) => {
+    console.log(data[0]);
+    const cardElementAddToPage = new Section(
+      {
+        items: data,
+        renderer: (cardItem) => {
+          cardElementAddToPage.setItem(createCard(cardItem));
+        },
+      },
+      ".gallery__list"
+    );
+
+    cardElementAddToPage.addItem();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //Функция создания карточки
 const createCard = (cardItem) => {
@@ -31,17 +77,6 @@ const createCard = (cardItem) => {
 };
 
 //Добавляем карточки из массива на страницу с помощью класса Section
-const cardElementAddToPage = new Section(
-  {
-    items: initialCards,
-    renderer: (cardItem) => {
-      cardElementAddToPage.setItem(createCard(cardItem));
-    },
-  },
-  ".gallery__list"
-);
-
-cardElementAddToPage.addItem();
 
 // Получаем данные о пользователе
 const userInfo = new UserInfo({
