@@ -11,6 +11,7 @@ import {
   jobInput,
   nameInput,
   profileEditButton,
+  galleryContainer,
   cardAddButton,
   formElements,
 } from "../utils/variables.js";
@@ -33,7 +34,6 @@ const api = new Api(URL, TOKEN);
 api
   .getUser()
   .then((data) => {
-    // addDataUserInProfile(profileName, profileProfession, profileAvatar, data);
     userInfo.setUserInfo(data);
   })
   .catch((err) => {
@@ -75,8 +75,9 @@ const createCard = (cardItem) => {
 //Добавляем классы попапам редактирования профиля и добавления карточки
 const profilePopup = new PopupWithForm(".popup-profile", {
   handleFormSubmit: (dataForm) => {
+    //Редактирование профиля
     api
-      .sendProfile(dataForm.name, dataForm.job)
+      .sendProfile(dataForm)
       .then((data) => {
         userInfo.setUserInfo(data);
       })
@@ -92,7 +93,15 @@ profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(".popup-card", {
   handleFormSubmit: (dataForm) => {
-    cardElementAddToPage.setItem(createCard(dataForm));
+    api
+      .sendCard(dataForm)
+      .then((data) => {
+        galleryContainer.prepend(createCard(data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     cardPopup.close();
   },
 });

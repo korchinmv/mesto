@@ -19,6 +19,7 @@ export const profileForm = document.querySelector(".popup__form_profile");
 export const nameCardFromPopup = cardForm.querySelector(
   ".popup__input_js_name-card"
 );
+export const galleryContainer = document.querySelector(".gallery__list");
 export const inputCardFromPopup = cardForm.querySelector(
   ".popup__input_js_link-card"
 );

@@ -4,6 +4,7 @@ export class Card {
   constructor(data, templateSelector, { handleCardClick }) {
     this._name = data.name;
     this._link = data.link;
+    this._likes = data.likes;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
   }
@@ -22,6 +23,8 @@ export class Card {
     this._cardName = this._element.querySelector(".card__name");
     this._cardPhoto = this._element.querySelector(".card__photo");
     this._likeButton = this._element.querySelector(".card__like-button");
+    this._likeNum = this._element.querySelector(".card__like-num");
+    this._likeNum.textContent = this._likes.length;
     this._trashButton = this._element.querySelector(".card__trash-button");
     this._cardName.textContent = this._name;
     this._cardPhoto.src = this._link;
