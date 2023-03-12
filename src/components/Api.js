@@ -16,7 +16,6 @@ export class Api {
       if (res.ok) {
         return res.json();
       }
-
       return Promise.reject(`Ошибка: ${res.status} что то идет не по плану`);
     }
   }
@@ -25,7 +24,6 @@ export class Api {
     const promise = fetch(`${this._URL}users/me`, {
       headers: this._getHeaders(),
     });
-
     return promise.then(this._getJson);
   }
 
@@ -33,7 +31,6 @@ export class Api {
     const promise = fetch(`${this._URL}cards`, {
       headers: this._getHeaders(),
     });
-
     return promise.then(this._getJson);
   }
 
@@ -59,7 +56,14 @@ export class Api {
         link: data.link,
       }),
     });
+    return promise.then(this._getJson);
+  }
 
+  deleteCard(cardId) {
+    const promise = fetch(`${this._URL}cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._getHeaders(),
+    });
     return promise.then(this._getJson);
   }
 }

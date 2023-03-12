@@ -1,5 +1,5 @@
 "use strict";
-
+let currentUserId;
 import "../pages/index.css";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -17,6 +17,7 @@ import {
 } from "../utils/variables.js";
 import { Api } from "../components/Api";
 import { Section } from "../components/Section.js";
+import { Popup } from "../components/Popup.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
@@ -31,24 +32,41 @@ const userInfo = new UserInfo({
 //Загрузка информации о пользователе с серверa
 const api = new Api(URL, TOKEN);
 
-api
-  .getUser()
-  .then((data) => {
-    userInfo.setUserInfo(data);
-  })
-  .catch((err) => {
-    console.log(err);
+//Функция создания карточки
+const createCard = (cardItem, currentUserId) => {
+  const card = new Card(cardItem, ".card-template", currentUserId, {
+    handleCardClick: (cardName, link) => {
+      photoPopup.open(cardName, link);
+    },
+    handleDeleteIconClick: (card) => {
+      deleteCardPopup.open();
+      // api
+      //   .deleteCard(currentUserId)
+      //   .then((data) => {
+      //     console.log(data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+    },
+    handleLikeClick: (card) => {},
   });
 
-//Загрузка карточек с сервера
-api
-  .getCards()
-  .then((data) => {
+  const cardElement = card.generateCard();
+  return cardElement;
+};
+
+//Загрузка карточек с сервера и получаем текущего юзера
+Promise.all([api.getUser(), api.getCards()])
+  .then(([user, cards]) => {
+    userInfo.setUserInfo(user);
+    currentUserId = user._id;
+
     const cardElementAddToPage = new Section(
       {
-        items: data,
+        items: cards,
         renderer: (cardItem) => {
-          cardElementAddToPage.setItem(createCard(cardItem));
+          cardElementAddToPage.setItem(createCard(cardItem, currentUserId));
         },
       },
       ".gallery__list"
@@ -59,18 +77,6 @@ api
   .catch((err) => {
     console.log(err);
   });
-
-//Функция создания карточки
-const createCard = (cardItem) => {
-  const card = new Card(cardItem, ".card-template", {
-    handleCardClick: (cardName, link) => {
-      photoPopup.open(cardName, link);
-    },
-  });
-
-  const cardElement = card.generateCard();
-  return cardElement;
-};
 
 //Добавляем классы попапам редактирования профиля и добавления карточки
 const profilePopup = new PopupWithForm(".popup-profile", {
@@ -88,7 +94,6 @@ const profilePopup = new PopupWithForm(".popup-profile", {
     profilePopup.close();
   },
 });
-
 profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(".popup-card", {
@@ -96,7 +101,7 @@ const cardPopup = new PopupWithForm(".popup-card", {
     api
       .sendCard(dataForm)
       .then((data) => {
-        galleryContainer.prepend(createCard(data));
+        galleryContainer.prepend(createCard(data, currentUserId));
       })
       .catch((err) => {
         console.log(err);
@@ -105,8 +110,10 @@ const cardPopup = new PopupWithForm(".popup-card", {
     cardPopup.close();
   },
 });
-
 cardPopup.setEventListeners();
+
+//Создаем экземпляр класса попапа
+const deleteCardPopup = new Popup(".popup-delete");
 
 //Добавляем класс попапу с картинкой
 const photoPopup = new PopupWithImage(".popup-photo");

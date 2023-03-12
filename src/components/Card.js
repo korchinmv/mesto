@@ -1,12 +1,21 @@
 "use strict";
 
 export class Card {
-  constructor(data, templateSelector, { handleCardClick }) {
+  constructor(
+    data,
+    templateSelector,
+    currentUserId,
+    { handleCardClick, handleDeleteIconClick, handleLikeClick }
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._handleDeleteIconClick = handleDeleteIconClick;
+    this._handleLikeClick = handleLikeClick;
+    this._currentUserId = currentUserId;
+    this._ownerCard = data.owner._id === currentUserId;
   }
 
   _getTemplate() {
@@ -29,6 +38,11 @@ export class Card {
     this._cardName.textContent = this._name;
     this._cardPhoto.src = this._link;
     this._cardPhoto.alt = `Фотография ${this._name}`;
+
+    if (!this._ownerCard) {
+      this._trashButton.remove();
+    }
+
     this._setEventListeners();
 
     return this._element;
@@ -53,7 +67,7 @@ export class Card {
     });
 
     this._trashButton.addEventListener("click", () => {
-      this._deleteCard();
+      this._handleDeleteIconClick();
     });
   }
 }
