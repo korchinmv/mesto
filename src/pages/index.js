@@ -52,7 +52,29 @@ const createCard = (cardItem, currentUserId) => {
           });
       });
     },
-    handleLikeClick: (card) => {},
+    handleLikeClick: (cardId, presenceLike) => {
+      if (presenceLike) {
+        api
+          .deleteLike(cardId)
+          .then((data) => {
+            card.updateLikes(data.likes.length);
+            console.log(data.likes.length);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        api
+          .addLike(cardId)
+          .then((data) => {
+            card.updateLikes(data.likes.length);
+            console.log(data.likes.length);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
   });
 
   const cardElement = card.generateCard();

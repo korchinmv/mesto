@@ -66,4 +66,20 @@ export class Api {
     });
     return promise.then(this._getJson);
   }
+
+  addLike(id) {
+    const promise = fetch(`${this._URL}cards/${id}/likes`, {
+      method: "PUT",
+      headers: this._getHeaders(),
+    });
+    return promise.then(this._getJson);
+  }
+
+  deleteLike(id) {
+    const promise = fetch(`${this._URL}cards/${id}/likes`, {
+      method: "DELETE",
+      headers: this._getHeaders(),
+    });
+    return promise.then(this._getJson);
+  }
 }

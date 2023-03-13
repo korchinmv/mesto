@@ -17,6 +17,7 @@ export class Card {
     this._handleLikeClick = handleLikeClick;
     this._currentUserId = currentUserId;
     this._ownerCard = card.owner._id === currentUserId;
+    this._liked = card.likes.find((user) => user._id === currentUserId);
   }
 
   _getTemplate() {
@@ -45,6 +46,11 @@ export class Card {
       this._trashButton.remove();
     }
 
+    //Проверяем лайкнута ли карточка нами
+    if (this._liked) {
+      this._likeButton.classList.add("card__like-button_active");
+    }
+
     this._setEventListeners();
 
     return this._element;
@@ -52,6 +58,10 @@ export class Card {
 
   _toggleLike() {
     this._likeButton.classList.toggle("card__like-button_active");
+  }
+
+  updateLikes(likes) {
+    this._likeNum.textContent = likes;
   }
 
   deleteCard() {
@@ -65,6 +75,8 @@ export class Card {
     });
 
     this._likeButton.addEventListener("click", () => {
+      this._handleLikeClick(this._cardId, this._liked);
+
       this._toggleLike();
     });
 
