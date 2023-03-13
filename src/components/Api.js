@@ -59,8 +59,8 @@ export class Api {
     return promise.then(this._getJson);
   }
 
-  deleteCard(cardId) {
-    const promise = fetch(`${this._URL}cards/${cardId}`, {
+  deleteCard(id) {
+    const promise = fetch(`${this._URL}cards/${id}`, {
       method: "DELETE",
       headers: this._getHeaders(),
     });

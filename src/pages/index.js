@@ -17,9 +17,9 @@ import {
 } from "../utils/variables.js";
 import { Api } from "../components/Api";
 import { Section } from "../components/Section.js";
-import { Popup } from "../components/Popup.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
+import { PopupWithConfirmation } from "../components/PopupWithConfirmation.js";
 import { UserInfo } from "../components/UserInfo.js";
 
 // Получаем данные о пользователе
@@ -38,16 +38,19 @@ const createCard = (cardItem, currentUserId) => {
     handleCardClick: (cardName, link) => {
       photoPopup.open(cardName, link);
     },
-    handleDeleteIconClick: (card) => {
-      deleteCardPopup.open();
-      // api
-      //   .deleteCard(currentUserId)
-      //   .then((data) => {
-      //     console.log(data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+    handleDeleteIconClick: (cardId) => {
+      confirmationPopup.open();
+      confirmationPopup.handleConfirmation(() => {
+        api
+          .deleteCard(cardId)
+          .then(() => {
+            card.deleteCard();
+            confirmationPopup.close();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
     },
     handleLikeClick: (card) => {},
   });
@@ -112,8 +115,9 @@ const cardPopup = new PopupWithForm(".popup-card", {
 });
 cardPopup.setEventListeners();
 
-//Создаем экземпляр класса попапа
-const deleteCardPopup = new Popup(".popup-delete");
+//Создаем экземпляр класса попапа для подтверждения удаления карточки
+const confirmationPopup = new PopupWithConfirmation(".popup-delete");
+confirmationPopup.setEventListeners();
 
 //Добавляем класс попапу с картинкой
 const photoPopup = new PopupWithImage(".popup-photo");
