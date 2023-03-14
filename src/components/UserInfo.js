@@ -11,6 +11,7 @@ export class UserInfo {
     const userInfo = {
       username: this._name.textContent,
       job: this._job.textContent,
+      avatar: this._avatar.src,
     };
 
     return userInfo;

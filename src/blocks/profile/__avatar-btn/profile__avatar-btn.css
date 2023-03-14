@@ -47,3 +47,15 @@
 .profile__avatar-btn:hover::before {
 	opacity: 1;
 }
+
+@media screen and (max-width: 768px) {
+	.profile__avatar-btn {
+		margin: 0 0 30px 0;
+	}
+}
+
+@media (hover: none) {
+	.profile__avatar-btn {
+		opacity: 1;
+	}
+}

@@ -37,9 +37,6 @@ const userInfo = new UserInfo({
 });
 
 //Функция обновления аватара
-const renderAvatar = (avatar) => {
-  profileAvatar.src = avatar;
-};
 
 //Загрузка информации о пользователе с серверa
 const api = new Api(URL, TOKEN);
@@ -128,6 +125,7 @@ const profilePopup = new PopupWithForm(".popup-profile", {
       .sendProfile(dataForm)
       .then((data) => {
         userInfo.setUserInfo(data);
+        profilePopup.close();
       })
       .catch((err) => {
         console.log(err);
@@ -135,8 +133,6 @@ const profilePopup = new PopupWithForm(".popup-profile", {
       .finally(() => {
         submitButtonInProfilePopup.textContent = "Создать";
       });
-
-    profilePopup.close();
   },
 });
 profilePopup.setEventListeners();
@@ -148,6 +144,7 @@ const cardPopup = new PopupWithForm(".popup-card", {
       .sendCard(dataForm)
       .then((data) => {
         galleryContainer.prepend(createCard(data, currentUserId));
+        cardPopup.close();
       })
       .catch((err) => {
         console.log(err);
@@ -155,8 +152,6 @@ const cardPopup = new PopupWithForm(".popup-card", {
       .finally(() => {
         submitButtonInCardPopup.textContent = "Создать";
       });
-
-    cardPopup.close();
   },
 });
 cardPopup.setEventListeners();
