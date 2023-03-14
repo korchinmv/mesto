@@ -22,7 +22,10 @@
 			<div class="container">
 				<div class="profile__inner">
 					<div class="profile__info">
-						<img class="profile__avatar" src="<%=require('./images/avatars/kusto.jpg')%>" alt="Аватарка">
+						<button class="profile__avatar-btn" type="button">
+							<img class="profile__avatar" src="<%=require('./images/avatars/kusto.jpg')%>" alt="Аватарка">
+						</button>
+
 
 						<div class="profile__content">
 							<div class="profile__content-box">
@@ -95,6 +98,24 @@
 				</label>
 
 				<button class="popup__save submit-card-form" type="submit">Создать</button>
+			</form>
+
+			<button class="popup__close hover close-card-form" type="button" aria-label="Закрыть"></button>
+		</div>
+	</div>
+
+	<div class="popup popup-edit-avatar">
+		<div class="popup__container">
+			<h3 class="popup__title">Обновить аватар</h3>
+
+			<form class="popup__form popup__form_avatar" name="popup-edit-avatar" novalidate>
+				<label class="popup__field">
+					<input class="popup__input popup__input_js_link-avatar" id="input-url" type="url" name="link"
+						placeholder="Ссылка на картинку" required>
+					<span class="popup__input-error input-url-error"></span>
+				</label>
+
+				<button class="popup__save submit-card-form" type="submit">Сохранить</button>
 			</form>
 
 			<button class="popup__close hover close-card-form" type="button" aria-label="Закрыть"></button>

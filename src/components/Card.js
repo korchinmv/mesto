@@ -5,7 +5,7 @@ export class Card {
     card,
     templateSelector,
     currentUserId,
-    { handleCardClick, handleDeleteIconClick, handleLikeClick }
+    { handleCardClick, handleDeleteIconClick, handleAddLike, handleDeleteLike }
   ) {
     this._name = card.name;
     this._link = card.link;
@@ -14,7 +14,8 @@ export class Card {
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteIconClick = handleDeleteIconClick;
-    this._handleLikeClick = handleLikeClick;
+    this._handleAddLike = handleAddLike;
+    this._handleDeleteLike = handleDeleteLike;
     this._currentUserId = currentUserId;
     this._ownerCard = card.owner._id === currentUserId;
     this._liked = card.likes.find((user) => user._id === currentUserId);
@@ -45,28 +46,29 @@ export class Card {
     if (!this._ownerCard) {
       this._trashButton.remove();
     }
-
     //Проверяем лайкнута ли карточка нами
-    if (this._liked) {
-      this._likeButton.classList.add("card__like-button_active");
-    }
+    this._cardLiked();
 
     this._setEventListeners();
 
     return this._element;
   }
 
-  _toggleLike() {
-    this._likeButton.classList.toggle("card__like-button_active");
-  }
-
-  updateLikes(likes) {
-    this._likeNum.textContent = likes;
+  _cardLiked() {
+    if (this._liked) {
+      this._likeButton.classList.add("card__like-button_active");
+    }
   }
 
   deleteCard() {
     this._element.remove();
     this._element = null;
+  }
+
+  updateLikes(arrLikes) {
+    this._likes = arrLikes.likes;
+    this._likeNum.textContent = this._likes.length;
+    this._likeButton.classList.toggle("card__like-button_active");
   }
 
   _setEventListeners() {
@@ -75,9 +77,9 @@ export class Card {
     });
 
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeClick(this._cardId, this._liked);
-
-      this._toggleLike();
+      this._likeButton.classList.contains("card__like-button_active")
+        ? this._handleDeleteLike(this._cardId)
+        : this._handleAddLike(this._cardId);
     });
 
     this._trashButton.addEventListener("click", () => {

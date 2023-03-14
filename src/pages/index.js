@@ -8,11 +8,13 @@ import {
   URL,
   cardForm,
   profileForm,
+  avatarForm,
   jobInput,
   nameInput,
   profileEditButton,
   galleryContainer,
   cardAddButton,
+  editAvatarButton,
   formElements,
 } from "../utils/variables.js";
 import { Api } from "../components/Api";
@@ -38,6 +40,7 @@ const createCard = (cardItem, currentUserId) => {
     handleCardClick: (cardName, link) => {
       photoPopup.open(cardName, link);
     },
+
     handleDeleteIconClick: (cardId) => {
       confirmationPopup.open();
       confirmationPopup.handleConfirmation(() => {
@@ -52,28 +55,27 @@ const createCard = (cardItem, currentUserId) => {
           });
       });
     },
-    handleLikeClick: (cardId, presenceLike) => {
-      if (presenceLike) {
-        api
-          .deleteLike(cardId)
-          .then((data) => {
-            card.updateLikes(data.likes.length);
-            console.log(data.likes.length);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        api
-          .addLike(cardId)
-          .then((data) => {
-            card.updateLikes(data.likes.length);
-            console.log(data.likes.length);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+
+    handleAddLike: (cardId) => {
+      api
+        .addLike(cardId)
+        .then((data) => {
+          card.updateLikes(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    handleDeleteLike: (cardId) => {
+      api
+        .deleteLike(cardId)
+        .then((data) => {
+          card.updateLikes(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   });
 
@@ -137,6 +139,8 @@ const cardPopup = new PopupWithForm(".popup-card", {
 });
 cardPopup.setEventListeners();
 
+const avatarPopup = new PopupWithForm(".popup-edit-avatar", {});
+avatarPopup.setEventListeners();
 //Создаем экземпляр класса попапа для подтверждения удаления карточки
 const confirmationPopup = new PopupWithConfirmation(".popup-delete");
 confirmationPopup.setEventListeners();
@@ -148,9 +152,11 @@ photoPopup.setEventListeners();
 //Создаем экземпляры класса валидации для отдельной формы
 const cardFormValidate = new FormValidator(formElements, cardForm);
 const profileFormValidate = new FormValidator(formElements, profileForm);
+const avatarFormValidate = new FormValidator(formElements, avatarForm);
 
 profileFormValidate.enableValidation();
 cardFormValidate.enableValidation();
+avatarFormValidate.enableValidation();
 
 //Открытие попапа профиля
 profileEditButton.addEventListener("click", () => {
@@ -168,4 +174,10 @@ profileEditButton.addEventListener("click", () => {
 cardAddButton.addEventListener("click", () => {
   cardFormValidate.resetValidation();
   cardPopup.open();
+});
+
+//Открытие попапа редактирования аватарки
+editAvatarButton.addEventListener("click", () => {
+  avatarFormValidate.resetValidation();
+  avatarPopup.open();
 });
