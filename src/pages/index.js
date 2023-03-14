@@ -7,6 +7,7 @@ import {
   TOKEN,
   URL,
   cardForm,
+  profileAvatar,
   profileForm,
   avatarForm,
   jobInput,
@@ -16,6 +17,10 @@ import {
   cardAddButton,
   editAvatarButton,
   formElements,
+  submitButtonInAvatarPopup,
+  submitButtonInProfilePopup,
+  submitButtonInCardPopup,
+  deleteCardButton,
 } from "../utils/variables.js";
 import { Api } from "../components/Api";
 import { Section } from "../components/Section.js";
@@ -31,6 +36,11 @@ const userInfo = new UserInfo({
   avatar: ".profile__avatar",
 });
 
+//Функция обновления аватара
+const renderAvatar = (avatar) => {
+  profileAvatar.src = avatar;
+};
+
 //Загрузка информации о пользователе с серверa
 const api = new Api(URL, TOKEN);
 
@@ -44,6 +54,7 @@ const createCard = (cardItem, currentUserId) => {
     handleDeleteIconClick: (cardId) => {
       confirmationPopup.open();
       confirmationPopup.handleConfirmation(() => {
+        deleteCardButton.textContent = "Удаление ...";
         api
           .deleteCard(cardId)
           .then(() => {
@@ -52,6 +63,9 @@ const createCard = (cardItem, currentUserId) => {
           })
           .catch((err) => {
             console.log(err);
+          })
+          .finally(() => {
+            deleteCardButton.textContent = "Да";
           });
       });
     },
@@ -109,6 +123,7 @@ Promise.all([api.getUser(), api.getCards()])
 const profilePopup = new PopupWithForm(".popup-profile", {
   handleFormSubmit: (dataForm) => {
     //Редактирование профиля
+    submitButtonInProfilePopup.textContent = "Сохранение...";
     api
       .sendProfile(dataForm)
       .then((data) => {
@@ -116,6 +131,9 @@ const profilePopup = new PopupWithForm(".popup-profile", {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        submitButtonInProfilePopup.textContent = "Создать";
       });
 
     profilePopup.close();
@@ -125,6 +143,7 @@ profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(".popup-card", {
   handleFormSubmit: (dataForm) => {
+    submitButtonInCardPopup.textContent = "Сохранение...";
     api
       .sendCard(dataForm)
       .then((data) => {
@@ -132,6 +151,9 @@ const cardPopup = new PopupWithForm(".popup-card", {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        submitButtonInCardPopup.textContent = "Создать";
       });
 
     cardPopup.close();
@@ -139,8 +161,25 @@ const cardPopup = new PopupWithForm(".popup-card", {
 });
 cardPopup.setEventListeners();
 
-const avatarPopup = new PopupWithForm(".popup-edit-avatar", {});
+const avatarPopup = new PopupWithForm(".popup-edit-avatar", {
+  handleFormSubmit: (avatar) => {
+    submitButtonInAvatarPopup.textContent = "Сохранение...";
+    api
+      .setAvatar(avatar)
+      .then((data) => {
+        renderAvatar(data.avatar);
+        avatarPopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        submitButtonInAvatarPopup.textContent = "Сохранить";
+      });
+  },
+});
 avatarPopup.setEventListeners();
+
 //Создаем экземпляр класса попапа для подтверждения удаления карточки
 const confirmationPopup = new PopupWithConfirmation(".popup-delete");
 confirmationPopup.setEventListeners();

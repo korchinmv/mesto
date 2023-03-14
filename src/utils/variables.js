@@ -29,8 +29,18 @@ export const jobInput = document.querySelector(".popup__input_js_profession");
 export const profileEditButton = document.querySelector(".profile__edit");
 export const cardAddButton = document.querySelector(".profile__add");
 export const editAvatarButton = document.querySelector(".profile__avatar-btn");
+export const profileAvatar = document.querySelector(".profile__avatar");
 export const buttonClosePopupProfile = document.querySelector(
   ".close-profile-form"
 );
 export const buttonCloseCardForm = document.querySelector(".close-card-form");
 export const buttonClosePopup = document.querySelector(".close-photo-popup");
+export const submitButtonInAvatarPopup = document.querySelector(
+  ".submit-avatar-form"
+);
+export const submitButtonInProfilePopup = document.querySelector(
+  ".submit-profile-form"
+);
+export const submitButtonInCardPopup =
+  document.querySelector(".submit-card-form");
+export const deleteCardButton = document.querySelector(".delete-card-button");

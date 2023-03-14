@@ -82,4 +82,15 @@ export class Api {
     });
     return promise.then(this._getJson);
   }
+
+  setAvatar(avatar) {
+    const promise = fetch(`${this._URL}users/me/avatar`, {
+      method: "PATCH",
+      headers: this._getHeaders(),
+      body: JSON.stringify({
+        avatar: avatar.link,
+      }),
+    });
+    return promise.then(this._getJson);
+  }
 }
