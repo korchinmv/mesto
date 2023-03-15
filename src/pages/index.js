@@ -36,8 +36,6 @@ const userInfo = new UserInfo({
   avatar: ".profile__avatar",
 });
 
-//Функция обновления аватара
-
 //Загрузка информации о пользователе с серверa
 const api = new Api(URL, TOKEN);
 
@@ -94,23 +92,22 @@ const createCard = (cardItem, currentUserId) => {
   return cardElement;
 };
 
+//Экземпляр класса Section (вставляем карточку в секции)
+const cardElementAddToPage = new Section(
+  {
+    renderer: (cardItem) => {
+      cardElementAddToPage.setItem(createCard(cardItem, currentUserId));
+    },
+  },
+  ".gallery__list"
+);
+
 //Загрузка карточек с сервера и получаем текущего юзера
 Promise.all([api.getUser(), api.getCards()])
   .then(([user, cards]) => {
     userInfo.setUserInfo(user);
     currentUserId = user._id;
-
-    const cardElementAddToPage = new Section(
-      {
-        items: cards,
-        renderer: (cardItem) => {
-          cardElementAddToPage.setItem(createCard(cardItem, currentUserId));
-        },
-      },
-      ".gallery__list"
-    );
-
-    cardElementAddToPage.addItem();
+    cardElementAddToPage.addItem(cards);
   })
   .catch((err) => {
     console.log(err);
@@ -120,18 +117,14 @@ Promise.all([api.getUser(), api.getCards()])
 const profilePopup = new PopupWithForm(".popup-profile", {
   handleFormSubmit: (dataForm) => {
     //Редактирование профиля
-    submitButtonInProfilePopup.textContent = "Сохранение...";
-    api
+    console.log(dataForm);
+    return api
       .sendProfile(dataForm)
       .then((data) => {
         userInfo.setUserInfo(data);
-        profilePopup.close();
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        submitButtonInProfilePopup.textContent = "Создать";
       });
   },
 });
@@ -139,18 +132,13 @@ profilePopup.setEventListeners();
 
 const cardPopup = new PopupWithForm(".popup-card", {
   handleFormSubmit: (dataForm) => {
-    submitButtonInCardPopup.textContent = "Сохранение...";
-    api
+    return api
       .sendCard(dataForm)
       .then((data) => {
-        galleryContainer.prepend(createCard(data, currentUserId));
-        cardPopup.close();
+        cardElementAddToPage.prependItem(createCard(data, currentUserId));
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        submitButtonInCardPopup.textContent = "Создать";
       });
   },
 });
@@ -158,18 +146,13 @@ cardPopup.setEventListeners();
 
 const avatarPopup = new PopupWithForm(".popup-edit-avatar", {
   handleFormSubmit: (avatar) => {
-    submitButtonInAvatarPopup.textContent = "Сохранение...";
-    api
+    return api
       .setAvatar(avatar)
       .then((data) => {
-        renderAvatar(data.avatar);
-        avatarPopup.close();
+        userInfo.changeAvatar(data);
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        submitButtonInAvatarPopup.textContent = "Сохранить";
       });
   },
 });
@@ -197,8 +180,7 @@ profileEditButton.addEventListener("click", () => {
   const infoAboutUser = userInfo.getUserInfo();
 
   //Добавляем имя и профессию в инпуты формы
-  nameInput.value = infoAboutUser.username;
-  jobInput.value = infoAboutUser.job;
+  profilePopup.setInputValues(infoAboutUser);
 
   profileFormValidate.resetValidation();
   profilePopup.open();

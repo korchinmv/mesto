@@ -7,6 +7,10 @@ export class UserInfo {
     this._avatar = document.querySelector(avatar);
   }
 
+  _getAvatar(dataForm) {
+    this._avatar.src = dataForm.avatar;
+  }
+
   getUserInfo() {
     const userInfo = {
       username: this._name.textContent,
@@ -20,6 +24,10 @@ export class UserInfo {
   setUserInfo(dataForm) {
     this._name.textContent = dataForm.name;
     this._job.textContent = dataForm.about;
-    this._avatar.src = dataForm.avatar;
+    this._getAvatar(dataForm);
+  }
+
+  changeAvatar(dataForm) {
+    this._getAvatar(dataForm);
   }
 }

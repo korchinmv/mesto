@@ -39,7 +39,7 @@ export class Api {
       method: "PATCH",
       headers: this._getHeaders(),
       body: JSON.stringify({
-        name: data.name,
+        name: data.username,
         about: data.job,
       }),
     });
